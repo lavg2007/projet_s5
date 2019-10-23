@@ -1,5 +1,5 @@
 %% mesures avec -1A
-
+%% A MODIFIER, A ETE FAIT AVEC UN POLYNOME MAIS NE DOIS PAS L'AVOIR ETE
 load('capteur.mat')
  
 d1 = distance;

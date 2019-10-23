@@ -285,6 +285,7 @@ SSTFs = sum((Fs-FsMean).^2);
 RMSFs = sqrt(sum((Fs_sim-Fs).^2)/NFs);
 RFs = 1 - SSresFs/SSTFs;
 
+
 if displays(4)
     disp('Qualite de l"approximation par les moindres carres de Fs :')
     disp('Valeur moyennes des mesures :')
