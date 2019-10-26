@@ -10,27 +10,27 @@ end
 % figure 2:   Simulation avec -2A
 % figure 3:   Simulation avec -1A mesure et coefficient moyens
 % figure 4:   Simulation avec -2A mesure et coefficient moyens
-% figure 5:   
+% figure 5:   Simulation pour Fs
 % figure 6:    
 % figure 7:   
 % figure 8:   
 % figure 9:   
 % figure 10:   
 %figures    1 2 3 4 5 6 7 8 9 10
-figures = [ 0 0 0 0 0 0 0 0 0 0];
+figures = [ 0 0 1 0 1 0 0 0 0 0];           %Mettre 1 pour afficher et 0 pour cacher
 
 % displays 1:   Erreur sur -1A
 % displays 2:   Erreur sur -2A
-% displays 3:   Choix des coefficients
+% displays 3:   Choix des coefficients Fe
 % displays 4:   Erreur sur Fs
-% displays 5:  
+% displays 5:   Choix des coefficients Fs
 % displays 6:
 % displays 7:   
 % displays 8:   
 % displays 9:   
 % displays 10:   
 %displays    1 2 3 4 5 6 7 8 9 10
-displays = [ 1 1 1 1 0 0 0 0 0 0];
+displays = [ 0 0 1 0 1 0 0 0 0 0];          %Mettre 1 pour afficher et 0 pour cacher
 
 %% mesures avec -1A
 
@@ -240,6 +240,9 @@ end
 
 load('Fs.mat')
 
+z_pos = z_pos(1:150);       %Les valeurs du debut sont plus importante que celles de la fin
+Fs = Fs(1:150);             %pour la determination des coefficients (la fin tend vers zero)
+
 z3_1 = z_pos;
 z3_0 = z3_1.^0;
 z3_2 = z3_1.^2;
@@ -250,33 +253,18 @@ Y3 = -1./Fs;
 X3 = [z3_0 z3_1 z3_2 z3_3];
 
 a3 = pinv(X3)*Y3;
-ae3_0 = a3(1);
-ae3_1 = a3(2);
-ae3_2 = a3(3);
-ae3_3 = a3(4);
+as_0 = a3(1);
+as_1 = a3(2);
+as_2 = a3(3);
+as_3 = a3(4);
 
-Fs_sim = -1./(ae3_0.*z3_0 + ae3_1.*z3_1 + ae3_2.*z3_2 + ae3_3.*z3_3);
+load('Fs.mat')
+z3_1 = z_pos;
+z3_0 = z3_1.^0;
+z3_2 = z3_1.^2;
+z3_3 = z3_1.^3;
 
-% figure(5)
-% subplot(2,1,1)
-% plot(z_pos,Fs_sim)
-% %axis([0 0.035 -16 0])
-% title('Simulation selon les valeurs calculees')
-% subplot(2,1,2)
-% plot(z_pos,Fs)
-% title('Simulation selon les valeurs mesurees')
-
-figure()
-hold on
-plot(z_pos,-1./Fs_sim)
-plot(z_pos,-1./Fs,'--')
-legend('Simulation','Mesures')
-
-figure()
-hold on
-plot(z_pos,Fs_sim)
-plot(z_pos,Fs,'--')
-legend('Simulation','Mesures')
+Fs_sim = -1./(as_0.*z3_0 + as_1.*z3_1 + as_2.*z3_2 + as_3.*z3_3);
 
 NFs = length(Fs);
 FsMean = sum(Fs)/NFs;
@@ -284,6 +272,25 @@ SSresFs = sum((Fs-Fs_sim).^2);
 SSTFs = sum((Fs-FsMean).^2);
 RMSFs = sqrt(sum((Fs_sim-Fs).^2)/NFs);
 RFs = 1 - SSresFs/SSTFs;
+
+if figures(5)
+    figure()
+    subplot(2,1,1)
+    hold on
+    plot(z_pos,Fs_sim)
+    plot(z_pos,Fs)
+    legend('Simulation selon les valeurs calculees','Simulation selon les valeurs mesurees')
+    title('Comparaison entre valeurs calculees et mesurees')
+    xlabel('Distance du capteur (m)')
+    ylabel('Fs (N)')
+    hold off
+    subplot(2,1,2)
+    plot(z_pos,Fs_sim-Fs)
+    ErreurText = sprintf('Coefficient de determination R2 : %.4f\nValeur RMS : %.4f\t', RFs,RMSFs);
+    legend(ErreurText)
+    xlabel('Distance du capteur (m)')
+    ylabel('Fs (N)')
+end
 
 if displays(4)
     disp('Qualite de l"approximation par les moindres carres de Fs :')
@@ -298,3 +305,18 @@ if displays(4)
     disp('Valeur RMS :')
     disp(RMSFs)
 end
+
+%% Choix des coefficients finaux
+
+if displays(5)
+    disp('Les coefficients choisis sont :')
+    disp('as0 : '),
+    disp(a3(1))
+    disp('as1 : '),
+    disp(a3(2))
+    disp('as2 : '),
+    disp(a3(3))
+    disp('as3 : '),
+    disp(a3(4))
+end
+
