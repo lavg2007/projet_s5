@@ -17,7 +17,7 @@ end
 % figure 9:   
 % figure 10:   
 %figures    1 2 3 4 5 6 7 8 9 10
-figures = [ 0 0 1 0 1 0 0 0 0 0];           %Mettre 1 pour afficher et 0 pour cacher
+figures = [ 0 0 0 0 1 0 0 0 0 0];           %Mettre 1 pour afficher et 0 pour cacher
 
 % displays 1:   Erreur sur -1A
 % displays 2:   Erreur sur -2A
@@ -30,7 +30,7 @@ figures = [ 0 0 1 0 1 0 0 0 0 0];           %Mettre 1 pour afficher et 0 pour ca
 % displays 9:   
 % displays 10:   
 %displays    1 2 3 4 5 6 7 8 9 10
-displays = [ 0 0 1 0 1 0 0 0 0 0];          %Mettre 1 pour afficher et 0 pour cacher
+displays = [ 0 0 0 0 0 0 0 0 0 0];          %Mettre 1 pour afficher et 0 pour cacher
 
 %% mesures avec -1A
 
@@ -320,3 +320,16 @@ if displays(5)
     disp(a3(4))
 end
 
+%% savegarde dans fichier .mat
+
+    ae0 = a2(1);
+    ae1 = a2(2);
+    ae2 = a2(3);
+    ae3 = a2(4);
+    
+    as0 = a3(1);
+    as1 = a3(2);
+    as2 = a3(3);
+    as3 = a3(4);
+    
+save('CoefficientsActionneurs.mat','ae0','ae1','ae2','ae3','as0','as1','as2','as3','be1')
