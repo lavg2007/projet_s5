@@ -1,11 +1,8 @@
 clc
 clear
 
-% variables d'état
-syms ia ib ic z theta phi dz dtheta dphi Px Py dPx dPy
-
-%sous matrices
-syms PP Px PC SP CC CV Tdef A B C D
+% varIAbles d'état
+syms IA IB IC z Ay Ax dz dAy dAx Px Py dPx dPy
 
 
 
@@ -16,7 +13,7 @@ syms Va Vb Vc
 syms masseS meff g 
 
 %plaque
-syms Jxy masseP 
+syms inertiePx inertiePy masseP 
 
 %elec
 syms La Ra Rb Lb Rc Lc
@@ -28,35 +25,35 @@ syms XA YA ZA XB YB ZB XC YC ZC r_abc za zb zc
 syms XE YE ZE XD YD ZD XF YF ZF r_def zd ze zf
 
 
+%sous matrIC_eqs
+syms PP PS PC SP CC CV Tdef A B C D
+
 
 %calcul des moments
 syms OA OB OC OS FA FB FC Fg T
-OA = [XA 0 0];
+
+OA = [XA YA 0];
 OB = [XB YB 0];
 OC = [XC YC 0];
 OS = [Px Py 0];
 Fg = [0 0 masseS*g];
 T = cross(OA, [0 0 FA]) + cross(OB, [0 0 FB]) + cross(OC, [0 0 FC]) + cross(OS, Fg) 
 
-Px = [[0 masseS*g];
+PS = [[0 masseS*g];
       [-masseS*g 0 ];
       [0 0]]
 
-za = z - r_abc*(sind(30)*sin(theta));
-zb = z + r_abc*(sind(30)*sin(theta) + sind(60)*sin(phi));
-zc = z + r_abc*(sind(30)*sin(theta) - sind(60)*sin(phi));
-
 syms ae0 ae1 ae2 ae3 be1 as0 as1 as2 as3
 
-syms FAe FBe FCe Pxe Pye iae ibe ice zae zbe zce zeq thetaeq phieq
+syms FA_eq FB_eq FC_eq Px_eq Py_eq IA_eq IB_eq IC_eq za_eq zb_eq zc_eq z_eq Ay_eq Ax_eq
 
 
-za = z - XA*theta + YA*phi;
-zb = z - XB*theta + YB*phi;
-zc = z - XC*theta + YC*phi;
-zd = z - XD*theta + YD*phi;
-ze = z - XE*theta + YE*phi;
-zf = z - XF*theta + YF*phi;
+za = z - XA*Ay + YA*Ax;
+zb = z - XB*Ay + YB*Ax;
+zc = z - XC*Ay + YC*Ax;
+zd = z - XD*Ay + YD*Ax;
+ze = z - XE*Ay + YE*Ax;
+zf = z - XF*Ay + YF*Ax;
 da = za - ZA;
 db = zb - ZB;
 dc = zc - ZC;
@@ -64,66 +61,66 @@ dd = zd - ZD;
 de = ze - ZE;
 df = zf - ZF;
 
-%phieq = 0;
-%thetaeq = 0;
+%Ax_eq = 0;
+%Ay_eq = 0;
 
-zae = zeq - XA*thetaeq + YA*phieq;
-zbe = zeq - XB*thetaeq + YB*phieq;
-zce = zeq - XC*thetaeq + YC*phieq;
+za_eq = z_eq - XA*Ay_eq + YA*Ax_eq;
+zb_eq = z_eq - XB*Ay_eq + YB*Ax_eq;
+zc_eq = z_eq - XC*Ay_eq + YC*Ax_eq;
 
 
 % pour courants positifs
-Fae = (iae^2+be1*iae)/(ae0 + ae1*zae + ae2*zae^2 + ae3*zae^3);
-Fas = -1/(as0 + as1*zae + as2*zae^2 + as3*zae^3);
+FA_eq = (IA_eq^2+be1*IA_eq)/(ae0 + ae1*za_eq + ae2*za_eq^2 + ae3*za_eq^3);
+FAs = -1/(as0 + as1*za_eq + as2*za_eq^2 + as3*za_eq^3);
 
-Fbe = (ibe^2+be1*ibe)/(ae0 + ae1*zbe + ae2*zbe^2 + ae3*zbe^3);
-Fbs = -1/(as0 + as1*zbe + as2*zbe^2 + as3*zbe^3);
+FB_eq = (IB_eq^2+be1*IB_eq)/(ae0 + ae1*zb_eq + ae2*zb_eq^2 + ae3*zb_eq^3);
+FBs = -1/(as0 + as1*zb_eq + as2*zb_eq^2 + as3*zb_eq^3);
 
-Fce = (ice^2+be1*ice)/(ae0 + ae1*zce + ae2*zce^2 + ae3*zce^3);
-Fcs = -1/(as0 + as1*zce + as2*zce^2 + as3*zce^3);
+FC_eq = (IC_eq^2+be1*IC_eq)/(ae0 + ae1*zc_eq + ae2*zc_eq^2 + ae3*zc_eq^3);
+FCs = -1/(as0 + as1*zc_eq + as2*zc_eq^2 + as3*zc_eq^3);
 
-Fa = Fae + Fas;
-Fb = Fbe + Fbs;
-Fc = Fce + Fcs;
-
-
-syms d2z_z d2z_theta d2z_phi
-d2z = Fa/(masseS + masseP) + Fb/(masseS + masseP) + Fc/(masseS + masseP) + g;
-
-d2z_z = diff(d2z, zeq);
-d2z_theta = diff(d2z, thetaeq);
-d2z_phi = diff(d2z, phieq);
-d2z_ia = diff(d2z, iae);
-d2z_ib = diff(d2z, ibe);
-d2z_ic = diff(d2z, ice);
-
-d2phi = (Fb*YC + Fc*YC + g*masseS*Pye)/Jxy;
-
-d2phi_z = diff(d2phi, zeq);
-d2phi_theta = diff(d2phi, thetaeq);
-d2phi_phi = diff(d2phi, phieq);
-d2phi_ia = diff(d2phi, iae);
-d2phi_ib = diff(d2phi, ibe);
-d2phi_ic = diff(d2phi, ice);
-
-d2theta = (-Fa*XA-Fb*XB-Fc*XC-g*masseS*Pxe)/Jxy;
-
-d2theta_z = diff(d2theta, zeq);
-d2theta_theta = diff(d2theta, thetaeq);
-d2theta_phi = diff(d2theta, phieq);
-d2theta_ia = diff(d2theta, iae);
-d2theta_ib = diff(d2theta, ibe);
-d2theta_ic = diff(d2theta, ice);
+FA = FA_eq + FAs;
+FB = FB_eq + FBs;
+FC = FC_eq + FCs;
 
 
-%Fa = 
-PP = [[d2phi_phi d2phi_theta d2phi_z];
-      [d2theta_phi d2theta_theta d2theta_z];
-      [d2z_phi d2z_theta d2z_z]]; %;
+syms d2z_z d2z_Ay d2z_Ax
+d2z = FA/(masseS + masseP) + FB/(masseS + masseP) + FC/(masseS + masseP) + g;
 
-PC = [[d2phi_ia d2phi_ib d2phi_ic];
-      [d2theta_ia d2theta_ib d2theta_ic];
-      [d2z_ia d2z_ib d2z_ic]]; %;
+d2z_z = diff(d2z, z_eq);
+d2z_Ay = diff(d2z, Ay_eq);
+d2z_Ax = diff(d2z, Ax_eq);
+d2z_IA = diff(d2z, IA_eq);
+d2z_IB = diff(d2z, IB_eq);
+d2z_IC = diff(d2z, IC_eq);
+
+d2Ax = (FB*YC + FC*YC + g*masseS*Py_eq)/inertiePx;
+
+d2Ax_z = diff(d2Ax, z_eq);
+d2Ax_Ay = diff(d2Ax, Ay_eq);
+d2Ax_Ax = diff(d2Ax, Ax_eq);
+d2Ax_IA = diff(d2Ax, IA_eq);
+d2Ax_IB = diff(d2Ax, IB_eq);
+d2Ax_IC = diff(d2Ax, IC_eq);
+
+d2Ay = (-FA*XA-FB*XB-FC*XC-g*masseS*Px_eq)/inertiePy;
+
+d2Ay_z = diff(d2Ay, z_eq);
+d2Ay_Ay = diff(d2Ay, Ay_eq);
+d2Ay_Ax = diff(d2Ay, Ax_eq);
+d2Ay_IA = diff(d2Ay, IA_eq);
+d2Ay_IB = diff(d2Ay, IB_eq);
+d2Ay_IC = diff(d2Ay, IC_eq);
+
+
+%FA = 
+PP = [[d2Ax_Ax d2Ax_Ay d2Ax_z];
+      [d2Ay_Ax d2Ay_Ay d2Ay_z];
+      [d2z_Ax d2z_Ay d2z_z]]
+
+PC = [[d2Ax_IA d2Ax_IB d2Ax_IC];
+      [d2Ay_IA d2Ay_IB d2Ay_IC];
+      [d2z_IA d2z_IB d2z_IC]]
 
 %positions
 
@@ -131,102 +128,40 @@ PC = [[d2phi_ia d2phi_ib d2phi_ic];
 
 
 SP = [0 -masseS*g/meff 0 ;
-      masseS*g/meff 0 0 ];
+      masseS*g/meff 0 0 ]
 
       
 CC = [-Ra/La 0 0 ;
       0 -Rb/Lb 0 ;
-      0 0 -Rc/Lc];
+      0 0 -Rc/Lc]
 
 CV = [1/La 0 0;
       0 1/Lb 0;
-      0 0 1/Lc];
+      0 0 1/Lc]
 
-Tdef = [[dd 0 0];
-        [0 de 0];
-        [0 0 df]];
+Tdef = [[YD -XD 1];
+        [YE -XE 1];
+        [YF -XF 1]]
 
 A = [[zeros([3,3]) eye(3) zeros([3,2]) zeros([3,2]) zeros([3,3]) ]; 
-     [PP zeros([3,3]) Px zeros([3,2]) PC ];
+     [PP zeros([3,3]) PS zeros([3,2]) PC ];
      [zeros([2,3]) zeros([2,3]) zeros([2,2]) eye(2) zeros([2,3]) ];
      [SP zeros([2,3]) zeros([2,2]) zeros([2,2]) zeros([2,3]) ];
-     [zeros([3,3]) zeros([3,3]) zeros([3,2]) zeros([3,2]) CC ]];
-
-A = subs(A, [thetaeq, phieq], [0, 0]);
-%A = subs(A, [XA, YA], [r_abc, 0]);
-%A = subs(A, [XB, YB], [-r_abc*sind(30), r_abc*cosd(30)]);
-%A = subs(A, [XC, YC], [-r_abc*sind(30), -r_abc*cosd(30)]);   
+     [zeros([3,3]) zeros([3,3]) zeros([3,2]) zeros([3,2]) CC ]]
 
      
 B = [[zeros([3,3])];
     [zeros([3,3])];
     [zeros([2,3])];
     [zeros([2,3])];
-    CV ];
+    CV ]
     
 C = [[Tdef zeros([3,3]) zeros([3,4]) zeros([3,3])];
-      [zeros([4,3]) zeros([4,3]) eye(4) zeros([4,3])]];
+      [zeros([4,3]) zeros([4,3]) eye(4) zeros([4,3])]]
       
-D = zeros([7,3]);
-
-%détermination des conditions d'équilibre
-
-%cas 1 theta = phi = 0, z = cste, avec sphère
-
-syms Vae Vbe Vce Veq
-eq_vars1 = [ iae ibe ice  XA YA XB YB XC YC ];
-eq_values1 = [ Vae/Ra Vbe/Rb Vce/Rc r_abc 0 -r_abc*sind(30) r_abc*cosd(30) -r_abc*sind(30) -r_abc*cosd(30)];
-eq_vars2 = [g Ra Rb Rc La Lb Lc thetaeq phieq Jxy masseP masseS r_abc ];
-eq_values2 = [9.807 3.6 3.6 3.6 0.115 0.115 0.115 0 0 1347 442 8.0 95.2 ];
-
-eq1 = Fa + Fb + Fc == (masseS + masseP)*g;
-eq1 = subs(eq1, eq_vars1, eq_values1);
-d2zeq_1 = vpa(subs(eq1, eq_vars2, eq_values2),3)
+D = zeros([7,3])
 
 
-eq2 = (Fb*YB + Fc*YC) == -g*masseS*Pye;
-eq2 = subs(eq2, eq_vars1, eq_values1);
-d2phieq_1 = vpa(subs(eq2, eq_vars2, eq_values2),3)
 
-
-eq3 = (-Fa*XA - Fb*XB - Fc*XC) == -g*masseS*Pxe;
-eq3 = subs(eq3, eq_vars1, eq_values1);
-d2thetaeq_1 = vpa(subs(eq3, eq_vars2, eq_values2), 3)
-
-%cas 2 theta = phi = 0, z = cste, sans sphère
-
-eq_vars1 = [iae ibe ice XA YA XB YB XC YC];
-eq_values1 = [Veq/Ra Veq/Rb Veq/Rc r_abc 0 -r_abc*sind(30) r_abc*cosd(30) -r_abc*sind(30) -r_abc*cosd(30)];
-eq_vars2 = [g Ra Rb Rc La Lb Lc Pxe Pye thetaeq phieq Jxy masseP masseS r_abc];
-eq_values2 = [9.807 3.6 3.6 3.6 0.115 0.115 0.115 0 0 0 0 1347 442 8.0 95.2];
-
-eq1 = subs(eq1, eq_vars1, eq_values1);
-d2zeq_2 = vpa(subs(eq1, eq_vars2, eq_values2),3)
-
-
-eq2 = subs(eq2, eq_vars1, eq_values1);
-d2phieq_2 = subs(eq2, eq_vars2, eq_values2)
-
-
-eq3 = subs(eq3, eq_vars1, eq_values1);
-d2thetaeq_2 = subs(eq3, eq_vars2, eq_values2)
-
-
-%cas 3
-
-eq_vars1 = [iae ibe ice XA YA XB YB XC YC];
-eq_values1 = [Vae/Ra Vbe/Rb Vce/Rc r_abc 0 -r_abc*sind(30) r_abc*cosd(30) -r_abc*sind(30) -r_abc*cosd(30)];
-eq_vars2 = [g Ra Rb Rc La Lb Lc Pxe Pye Jxy masseP masseS r_abc];
-eq_values2 = [9.807 3.6 3.6 3.6 0.115 0.115 0.115 0 0 1347 442 0 95.2];
-
-eq1 = subs(eq1, eq_vars1, eq_values1);
-d2zeq_3 = vpa(subs(eq1, eq_vars2, eq_values2),3)
-
-
-eq2 = subs(eq2, eq_vars1, eq_values1);
-d2phieq_3 = subs(eq2, eq_vars2, eq_values2)
-
-
-eq3 = subs(eq3, eq_vars1, eq_values1);
-d2thetaeq_3 = subs(eq3, eq_vars2, eq_values2)
+%% D�couplage de la plaque
 
