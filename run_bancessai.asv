@@ -20,15 +20,14 @@ z_des     = [t_des, [1 1 1 1  1  1 1 1 1]'*.015];
 tfin = 50;
 
 %initialisation
+
 bancEssaiConstantes
-Modelisation
 load('CoefficientsActionneurs.mat')
 
 %bancessai_ini  %faites tous vos calculs de modele ici
 load('Linearisation.mat')
+equilibre
 
-
-%conditions d'équilibre
 
 %Calcul des compensateurs
 %iniCTL_ver4    %Calculez vos compensateurs ici
@@ -42,7 +41,7 @@ set_param('SimulationV2','AlgebraicLoopSolver','LineSearch')
 sim('SimulationV2')
 
 %% Plot test
-% figure()
+figure()
 % subplot(2,1,1)
 % % hold on
 % % plot(tsim,ynonlineaire(:,1)-ynonlineaire2(:,1))
@@ -72,8 +71,10 @@ sim('SimulationV2')
 % % plot(tsim,ynonlineaire(:,25)-ynonlineaire2(:,25))
 % % axis([0 50 -2 2])
 % subplot(2,1,2)
-% hold on
-% plot(tsim,ynonlineaire(:,23))
+hold on
+plot(tsim,ynonlineaire(:,23))
+plot(tsim,ynonlineaire(:,24))
+plot(tsim,ynonlineaire(:,25))
 % plot(tsim,ynonlineaire2(:,23),'--')
 
 figure()

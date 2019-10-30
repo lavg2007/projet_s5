@@ -2,6 +2,8 @@ close all
 clear all
 clc
 
+Modelisation
+
 % Position à l'équilibre de la sphère (pour tests statiques)
 sig = 1;         % Présence (1) ou non (0) de la sphère
 xSeq = 0.000;      % Position x de la sphère à l'équilibre en metres
@@ -20,11 +22,17 @@ z_des     = [t_des, [1 1 1 1  1  1 1 1 1]'*.015];
 tfin = 50;
 
 %initialisation
-equilibre
+
 bancEssaiConstantes
 load('CoefficientsActionneurs.mat')
 
 %bancessai_ini  %faites tous vos calculs de modele ici
+load('Linearisation.mat')
+equilibre
+A = eval(subs(A))
+B = eval(subs(B))
+C = eval(subs(C))
+D = eval(subs(D))
 
 
 %Calcul des compensateurs
@@ -34,12 +42,12 @@ load('CoefficientsActionneurs.mat')
 % open_system('DYNctl_ver4_etud_obfusc')
 % set_param('DYNctl_ver4_etud_obfusc','AlgebraicLoopSolver','LineSearch')
 % sim('DYNctl_ver4_etud_obfusc')
-open_system('SimulationV2')
-set_param('SimulationV2','AlgebraicLoopSolver','LineSearch')
-sim('SimulationV2')
+open_system('SimulationV3')
+set_param('SimulationV3','AlgebraicLoopSolver','LineSearch')
+sim('SimulationV3')
 
 %% Plot test
-% figure()
+figure()
 % subplot(2,1,1)
 % % hold on
 % % plot(tsim,ynonlineaire(:,1)-ynonlineaire2(:,1))
@@ -69,8 +77,10 @@ sim('SimulationV2')
 % % plot(tsim,ynonlineaire(:,25)-ynonlineaire2(:,25))
 % % axis([0 50 -2 2])
 % subplot(2,1,2)
-% hold on
-% plot(tsim,ynonlineaire(:,23))
+hold on
+plot(tsim,ynonlineaire(:,23))
+plot(tsim,ynonlineaire(:,24))
+plot(tsim,ynonlineaire(:,25))
 % plot(tsim,ynonlineaire2(:,23),'--')
 
 figure()
@@ -89,5 +99,8 @@ hold on
 plot(tsim, z_des_out1)
 plot(tsim, ynonlineaire2(:,3))
 
+
+figure
+plot(tsim, ylineaire(:,4))
 %affichage
 %trajectoires

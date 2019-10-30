@@ -160,20 +160,6 @@ C = [[Tdef zeros([3,3]) zeros([3,4]) zeros([3,3])];
       
 D = zeros([7,3])
 
-% load('CoefficientsActionneurs.mat')
-% bancEssaiConstantes
-% 
-% 
-% 
-% syms VAeq VBeq VCeq
-% IAeq = VAeq/RA;
-% IBeq = VBeq/RB;
-% ICeq = VCeq/RC;
-% 
-% A = subs(A)
-% B = eval(subs(B))
-% C = eval(subs(C))
-
 
 
 save('Linearisation.mat','A','B','C','D')
