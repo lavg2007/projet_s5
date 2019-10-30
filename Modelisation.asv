@@ -8,10 +8,10 @@ syms IA IB IC z Ay Ax dz dAy dAx Px Py dPx dPy
 syms Va Vb Vc
 
 %sphere
-syms mS mSeff g 
+syms masseS meff g 
 
 %plaque
-syms Jx Jy mP 
+syms inertiePx inertiePy masseP 
 
 %elec
 syms LA RA RB LB RC LC
@@ -34,16 +34,16 @@ OA = [XA YA 0];
 OB = [XB YB 0];
 OC = [XC YC 0];
 OS = [Px Py 0];
-Fg = [0 0 mS*g];
+Fg = [0 0 masseS*g];
 T = cross(OA, [0 0 FA]) + cross(OB, [0 0 FB]) + cross(OC, [0 0 FC]) + cross(OS, Fg) 
 
-PS = [[0 mS*g];
-      [-mS*g 0 ];
+PS = [[0 masseS*g];
+      [-masseS*g 0 ];
       [0 0]]
 
 syms ae0 ae1 ae2 ae3 be1 as0 as1 as2 as3
 
-syms FAeq FBeq FCeq Pxeq Pyeq IAeq IBeq ICeq zaeq zbeq zceq Pzeq Ayeq Axeq
+syms FAeq FBeq FCeq Pxeq Pyeq IAeq IBeq ICeq zaeq zbeq zceq zeq Ayeq Axeq
 
 
 za = z - XA*Ay + YA*Ax;
@@ -62,48 +62,48 @@ df = zf - ZF;
 %Axeq = 0;
 %Ayeq = 0;
 
-zaeq = Pzeq - XA*Ayeq + YA*Axeq;
-zbeq = Pzeq - XB*Ayeq + YB*Axeq;
-zceq = Pzeq - XC*Ayeq + YC*Axeq;
+zaeq = zeq - XA*Ayeq + YA*Axeq;
+zbeq = zeq - XB*Ayeq + YB*Axeq;
+zceq = zeq - XC*Ayeq + YC*Axeq;
 
 
 % pour courants positifs
-FAe = (IAeq^2+be1*IAeq)/(ae0 + ae1*zaeq + ae2*zaeq^2 + ae3*zaeq^3);
+FAeq = (IAeq^2+be1*IAeq)/(ae0 + ae1*zaeq + ae2*zaeq^2 + ae3*zaeq^3);
 FAs = -1/(as0 + as1*zaeq + as2*zaeq^2 + as3*zaeq^3);
 
-FBe = (IBeq^2+be1*IBeq)/(ae0 + ae1*zbeq + ae2*zbeq^2 + ae3*zbeq^3);
+FBeq = (IBeq^2+be1*IBeq)/(ae0 + ae1*zbeq + ae2*zbeq^2 + ae3*zbeq^3);
 FBs = -1/(as0 + as1*zbeq + as2*zbeq^2 + as3*zbeq^3);
 
-FCe = (ICeq^2+be1*ICeq)/(ae0 + ae1*zceq + ae2*zceq^2 + ae3*zceq^3);
+FCeq = (ICeq^2+be1*ICeq)/(ae0 + ae1*zceq + ae2*zceq^2 + ae3*zceq^3);
 FCs = -1/(as0 + as1*zceq + as2*zceq^2 + as3*zceq^3);
 
-FA = FAe + FAs;
-FB = FBe + FBs;
-FC = FCe + FCs;
+FA = FAeq + FAs;
+FB = FBeq + FBs;
+FC = FCeq + FCs;
 
 
 syms d2z_z d2z_Ay d2z_Ax
-d2z = FA/(mS + mP) + FB/(mS + mP) + FC/(mS + mP) + g
+d2z = FA/(masseS + masseP) + FB/(masseS + masseP) + FC/(masseS + masseP) + g;
 
-d2z_z = diff(d2z, Pzeq);
+d2z_z = diff(d2z, zeq);
 d2z_Ay = diff(d2z, Ayeq);
 d2z_Ax = diff(d2z, Axeq);
 d2z_IA = diff(d2z, IAeq);
 d2z_IB = diff(d2z, IBeq);
 d2z_IC = diff(d2z, ICeq);
 
-d2Ax = (FA*YA + FB*YB + FC*YC + g*mS*Pyeq)/Jx
+d2Ax = (FB*YC + FC*YC + g*masseS*Pyeq)/inertiePx;
 
-d2Ax_z = diff(d2Ax, Pzeq);
+d2Ax_z = diff(d2Ax, zeq);
 d2Ax_Ay = diff(d2Ax, Ayeq);
 d2Ax_Ax = diff(d2Ax, Axeq);
 d2Ax_IA = diff(d2Ax, IAeq);
 d2Ax_IB = diff(d2Ax, IBeq);
 d2Ax_IC = diff(d2Ax, ICeq);
 
-d2Ay = (-FA*XA-FB*XB-FC*XC-g*mS*Pxeq)/Jy
+d2Ay = (-FA*XA-FB*XB-FC*XC-g*masseS*Pxeq)/inertiePy;
 
-d2Ay_z = diff(d2Ay, Pzeq);
+d2Ay_z = diff(d2Ay, zeq);
 d2Ay_Ay = diff(d2Ay, Ayeq);
 d2Ay_Ax = diff(d2Ay, Axeq);
 d2Ay_IA = diff(d2Ay, IAeq);
@@ -125,8 +125,8 @@ PC = [[d2Ax_IA d2Ax_IB d2Ax_IC];
 
 
 
-SP = [0 -mS*g/mSeff 0 ;
-      mS*g/mSeff 0 0 ]
+SP = [0 -masseS*g/meff 0 ;
+      masseS*g/meff 0 0 ]
 
       
 CC = [-RA/LA 0 0 ;
@@ -147,7 +147,6 @@ A = [[zeros([3,3]) eye(3) zeros([3,2]) zeros([3,2]) zeros([3,3]) ];
      [SP zeros([2,3]) zeros([2,2]) zeros([2,2]) zeros([2,3]) ];
      [zeros([3,3]) zeros([3,3]) zeros([3,2]) zeros([3,2]) CC ]]
 
-
      
 B = [[zeros([3,3])];
     [zeros([3,3])];
@@ -160,19 +159,11 @@ C = [[Tdef zeros([3,3]) zeros([3,4]) zeros([3,3])];
       
 D = zeros([7,3])
 
-% load('CoefficientsActionneurs.mat')
-% bancEssaiConstantes
-% 
-% 
-% 
-% syms VAeq VBeq VCeq
-% IAeq = VAeq/RA;
-% IBeq = VBeq/RB;
-% ICeq = VCeq/RC;
-% 
-% A = subs(A)
-% B = eval(subs(B))
-% C = eval(subs(C))
+load('CoefficientsActionneurs.mat')
+bancEssaiConstantes
+A = subs(A)
+B = eval(subs(B))
+C = eval(subs(C))
 
 
 
