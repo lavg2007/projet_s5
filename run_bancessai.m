@@ -43,11 +43,11 @@ D = eval(subs(D))
 % set_param('DYNctl_ver4_etud_obfusc','AlgebraicLoopSolver','LineSearch')
 % sim('DYNctl_ver4_etud_obfusc')
 open_system('SimulationV3')
-set_param('SimulationV3','AlgebraicLoopSolver','LineSearch')
+set_param('SimulationV3','AlgebraicLoopSolver','TrustRegion')
 sim('SimulationV3')
 
 %% Plot test
-figure()
+% figure()
 % subplot(2,1,1)
 % % hold on
 % % plot(tsim,ynonlineaire(:,1)-ynonlineaire2(:,1))
@@ -77,10 +77,10 @@ figure()
 % % plot(tsim,ynonlineaire(:,25)-ynonlineaire2(:,25))
 % % axis([0 50 -2 2])
 % subplot(2,1,2)
-hold on
-plot(tsim,ynonlineaire(:,23))
-plot(tsim,ynonlineaire(:,24))
-plot(tsim,ynonlineaire(:,25))
+% hold on
+% plot(tsim,ynonlineaire(:,23))
+% plot(tsim,ynonlineaire(:,24))
+% plot(tsim,ynonlineaire(:,25))
 % plot(tsim,ynonlineaire2(:,23),'--')
 
 figure()
@@ -100,7 +100,17 @@ plot(tsim, z_des_out1)
 plot(tsim, ynonlineaire2(:,3))
 
 
-figure
+figure()
+subplot(2,1,1)
+hold on
+plot(tsim, x_des_out1)
 plot(tsim, ylineaire(:,4))
-%affichage
+
+subplot(2,1,2)
+hold on
+plot(tsim, y_des_out1)
+plot(tsim, ylineaire(:,5))
+
+
+% %affichage
 %trajectoires
