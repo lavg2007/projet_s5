@@ -1,4 +1,4 @@
-
+disp('Calcul des conditions d''équilibre...')
 
 load('CoefficientsActionneurs.mat')
 syms VAeq VBeq VCeq IAeq IBeq ICeq FAeq FBeq FCeq
@@ -22,6 +22,6 @@ eqFC = sign(IBeq)*(ICeq^2 + be1*abs(ICeq))/(ae0 + ZCeq*ae1 + ZCeq^2*ae2 + ZCeq^3
 
 [IAeq IBeq ICeq] = solve([eqFA eqFB eqFC]);
 
-VAeq = double(IAeq/RA)
-VBeq = double(IBeq/RB)
-VCeq = double(ICeq/RC)
+VAeq = double(IAeq/RA);
+VBeq = double(IBeq/RB);
+VCeq = double(ICeq/RC);

@@ -30,16 +30,18 @@ syms PP PS PC SP CC CV Tdef A B C D
 %calcul des moments
 syms OA OB OC OS FA FB FC Fg T
 
+disp('Modélisation du système...')
+
 OA = [XA YA 0];
 OB = [XB YB 0];
 OC = [XC YC 0];
 OS = [Px Py 0];
 Fg = [0 0 mS*g];
-T = cross(OA, [0 0 FA]) + cross(OB, [0 0 FB]) + cross(OC, [0 0 FC]) + cross(OS, Fg) 
+T = cross(OA, [0 0 FA]) + cross(OB, [0 0 FB]) + cross(OC, [0 0 FC]) + cross(OS, Fg);
 
 PS = [[0 mS*g];
       [-mS*g 0 ];
-      [0 0]]
+      [0 0]];
 
 syms ae0 ae1 ae2 ae3 be1 as0 as1 as2 as3
 
@@ -82,8 +84,8 @@ FB = FBe + FBs;
 FC = FCe + FCs;
 
 
-syms d2z_z d2z_Ay d2z_Ax
-d2z = FA/(mS + mP) + FB/(mS + mP) + FC/(mS + mP) + g
+syms d2z_z d2z_Ay d2z_Ax;
+d2z = FA/(mS + mP) + FB/(mS + mP) + FC/(mS + mP) + g;
 
 d2z_z = diff(d2z, Pzeq);
 d2z_Ay = diff(d2z, Ayeq);
@@ -92,7 +94,7 @@ d2z_IA = diff(d2z, IAeq);
 d2z_IB = diff(d2z, IBeq);
 d2z_IC = diff(d2z, ICeq);
 
-d2Ax = (FA*YA + FB*YB + FC*YC + g*mS*Pyeq)/Jx
+d2Ax = (FA*YA + FB*YB + FC*YC + g*mS*Pyeq)/Jx;
 
 d2Ax_z = diff(d2Ax, Pzeq);
 d2Ax_Ay = diff(d2Ax, Ayeq);
@@ -101,7 +103,7 @@ d2Ax_IA = diff(d2Ax, IAeq);
 d2Ax_IB = diff(d2Ax, IBeq);
 d2Ax_IC = diff(d2Ax, ICeq);
 
-d2Ay = (-FA*XA-FB*XB-FC*XC-g*mS*Pxeq)/Jy
+d2Ay = (-FA*XA-FB*XB-FC*XC-g*mS*Pxeq)/Jy;
 
 d2Ay_z = diff(d2Ay, Pzeq);
 d2Ay_Ay = diff(d2Ay, Ayeq);
@@ -114,11 +116,11 @@ d2Ay_IC = diff(d2Ay, ICeq);
 %FA = 
 PP = [[d2Ax_Ax d2Ax_Ay d2Ax_z];
       [d2Ay_Ax d2Ay_Ay d2Ay_z];
-      [d2z_Ax d2z_Ay d2z_z]]
+      [d2z_Ax d2z_Ay d2z_z]];
 
 PC = [[d2Ax_IA d2Ax_IB d2Ax_IC];
       [d2Ay_IA d2Ay_IB d2Ay_IC];
-      [d2z_IA d2z_IB d2z_IC]]
+      [d2z_IA d2z_IB d2z_IC]];
 
 %positions
 
@@ -126,26 +128,26 @@ PC = [[d2Ax_IA d2Ax_IB d2Ax_IC];
 
 
 SP = [0 -mS*g/mSeff 0 ;
-      mS*g/mSeff 0 0 ]
+      mS*g/mSeff 0 0 ];
 
       
 CC = [-RA/LA 0 0 ;
       0 -RB/LB 0 ;
-      0 0 -RC/LC]
+      0 0 -RC/LC];
 
 CV = [1/LA 0 0;
       0 1/LB 0;
-      0 0 1/LC]
+      0 0 1/LC];
 
 Tdef = [[YD -XD 1];
         [YE -XE 1];
-        [YF -XF 1]]
+        [YF -XF 1]];
 
 A = [[zeros([3,3]) eye(3) zeros([3,2]) zeros([3,2]) zeros([3,3]) ]; 
      [PP zeros([3,3]) PS zeros([3,2]) PC ];
      [zeros([2,3]) zeros([2,3]) zeros([2,2]) eye(2) zeros([2,3]) ];
      [SP zeros([2,3]) zeros([2,2]) zeros([2,2]) zeros([2,3]) ];
-     [zeros([3,3]) zeros([3,3]) zeros([3,2]) zeros([3,2]) CC ]]
+     [zeros([3,3]) zeros([3,3]) zeros([3,2]) zeros([3,2]) CC ]];
 
 
      
@@ -153,18 +155,18 @@ B = [[zeros([3,3])];
     [zeros([3,3])];
     [zeros([2,3])];
     [zeros([2,3])];
-    CV ]
+    CV ];
     
 C = [[Tdef zeros([3,3]) zeros([3,4]) zeros([3,3])];
-      [zeros([4,3]) zeros([4,3]) eye(4) zeros([4,3])]]
+      [zeros([4,3]) zeros([4,3]) eye(4) zeros([4,3])]];
       
-D = zeros([7,3])
+D = zeros([7,3]);
 
 U = [YA YB YC;
      -XA -XB -XC;
      1 1 1];
 
-save('Linearisation.mat','A','B','C','D')
+save('Linearisation.mat','A','B','C','D','PP','SP','PS','CC','PC','CV');
 
 %% Découplage de la plaque
 
