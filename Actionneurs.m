@@ -11,13 +11,13 @@ end
 % figure 3:   Simulation avec -1A mesure et coefficient moyens
 % figure 4:   Simulation avec -2A mesure et coefficient moyens
 % figure 5:   Simulation pour Fs
-% figure 6:    
+% figure 6:   Comparaison lineaire vs non lineaire
 % figure 7:   
 % figure 8:   
 % figure 9:   
 % figure 10:   
 %figures    1 2 3 4 5 6 7 8 9 10
-figures = [ 0 0 0 0 1 0 0 0 0 0];           %Mettre 1 pour afficher et 0 pour cacher
+figures = [ 0 0 0 0 0 1 0 0 0 0];           %Mettre 1 pour afficher et 0 pour cacher
 
 % displays 1:   Erreur sur -1A
 % displays 2:   Erreur sur -2A
@@ -333,3 +333,20 @@ end
     as3 = a3(4);
     
 save('CoefficientsActionneurs.mat','ae0','ae1','ae2','ae3','as0','as1','as2','as3','be1')
+
+%% comparaison lineaire et non lineaire
+
+Isim = -1;
+zsim = 0:0.0001:0.03;
+
+Fenonlineairesim = ((Isim^2+be1*abs(Isim))*sign(Isim))./(ae0 + ae1.*zsim + ae2.*zsim.^2 + ae3.*zsim.^3);
+Fsnonlineairesim = -1./(as_0 + as_1.*zsim + as_2.*zsim.^2 + as_3.*zsim.^3);
+Fnonlineairesim = Fenonlineairesim+Fsnonlineairesim;
+
+if figures(6)
+    figure()
+    hold on
+    plot(zsim,Fnonlineairesim)
+    plot(zsim,Fnonlineairesim)      %lineaire
+end
+    

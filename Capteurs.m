@@ -1,4 +1,9 @@
 %% mesures avec -1A
+
+%%
+
+Taylor, Fourier, sinus, exponentielle,...
+
 %% A MODIFIER, A ETE FAIT AVEC UN POLYNOME MAIS NE DOIS PAS L'AVOIR ETE
 load('capteur.mat')
  
@@ -22,7 +27,7 @@ V = a0*d0 + a1*d1 + a2*d2 + a3*d3 + a4*d4;
 
 figure(1)
 hold on
-plot(distance,V)
+% plot(distance,V)
 plot(distance,voltage)
-legend('Simulation selon les valeurs calculees','Simulation selon les valeurs mesurees')
+% legend('Simulation selon les valeurs calculees','Simulation selon les valeurs mesurees')
 hold off
