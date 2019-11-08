@@ -1,17 +1,10 @@
 
-%Modelisation
-sig = 1;         % Présence (1) ou non (0) de la sphère
-xSeq = 0.000;      % Position x de la sphère à l'équilibre en metres
-ySeq = 0.000;      % Position y de la sphère à l'équilibre en metres
-Pyeq = ySeq;
-Pxeq = xSeq;
-%Point d'opération choisi pour la plaque
-Axeq = 0;               %en degres
-Ayeq = 0;               %en degres
-Pzeq = .015;            %en metres
-bancEssaiConstantes
+
 load('CoefficientsActionneurs.mat')
 syms VAeq VBeq VCeq IAeq IBeq ICeq FAeq FBeq FCeq
+
+Pyeq = ySeq;
+Pxeq = xSeq;
 
 d2zeq =  vpa(FAeq/mtot + FBeq/mtot + FCeq/mtot + g,5);
 d2Axeq = vpa((FAeq*YA + FBeq*YB + FCeq*YC + g*mS*Pyeq)/Jx,5);

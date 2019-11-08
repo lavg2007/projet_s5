@@ -51,6 +51,10 @@ yvec_DEF = [YD, YE, YF]';
 TDEF = [yvec_DEF'; -xvec_DEF'; ones(1,3)];
 TDEF_inv = inv(TDEF);
 
+U = [YA YB YC;
+     -XA -XB -XC;
+     1 1 1];
+
 % Paramètres inertiels
 % --------------------
 

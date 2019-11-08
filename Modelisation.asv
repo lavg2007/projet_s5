@@ -160,11 +160,17 @@ C = [[Tdef zeros([3,3]) zeros([3,4]) zeros([3,3])];
       
 D = zeros([7,3])
 
-U = [YA YB YC;
-     -XA -XB -XC;
-     1 1 1];
+
 
 save('Linearisation.mat','A','B','C','D')
 
 %% Découplage de la plaque
 
+syms i_phi i_theta i_z
+
+eq1 = i_phi == YA*IA + YB*IB + YC*IC
+eq2 = i_theta == -XA*IA - XB*IB - XC*IC
+eq3 = i_z == IA + IB + IC
+
+F_phi = 
+%PP_dec

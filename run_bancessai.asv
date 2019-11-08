@@ -59,12 +59,7 @@ A_z = [A_plaque(3,3) A_plaque(3,6) A_plaque(3,9);
          A_plaque(6,3) A_plaque(6,6) A_plaque(6,9);
          A_plaque(9,3) A_plaque(9,6) A_plaque(9,9)]
 
-B_phi = [0;0;B_plaque(7,1)]
-B_theta = [0;0;B_plaque(8,2)]
-B_z = [0;0;B_plaque(9,3)]
-
-C_dec = [1 0 0]
-D_dec = [0]
+B_phi = 
 
 %Calcul des compensateurs
 %iniCTL_ver4    %Calculez vos compensateurs ici
