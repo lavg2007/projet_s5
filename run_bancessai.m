@@ -71,6 +71,10 @@ tf_sphere = tf(ss(A_sphere, B_sphere, C_sphere, D_sphere));
 tf_phi = tf(ss(A_phi, B_phi, C_dec, D_dec));
 tf_theta = tf(ss(A_theta, B_theta, C_dec, D_dec));
 tf_z = tf(ss(A_z, B_z, C_dec, D_dec));
+%%
+figure
+pzmap(ss(A,B,C,D))
+vp = eig(A)
 
 
 %Calcul des compensateurs
