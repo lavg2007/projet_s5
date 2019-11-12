@@ -11,13 +11,13 @@ end
 % figure 3:   Simulation avec -1A mesure et coefficient moyens
 % figure 4:   Simulation avec -2A mesure et coefficient moyens
 % figure 5:   Simulation pour Fs
-% figure 6:   Comparaison lineaire vs non lineaire
+% figure 6:    
 % figure 7:   
 % figure 8:   
 % figure 9:   
 % figure 10:   
 %figures    1 2 3 4 5 6 7 8 9 10
-figures = [ 0 0 0 0 0 1 0 0 0 0];           %Mettre 1 pour afficher et 0 pour cacher
+figures = [ 0 0 0 0 0 1 1 0 0 0];           %Mettre 1 pour afficher et 0 pour cacher
 
 % displays 1:   Erreur sur -1A
 % displays 2:   Erreur sur -2A
@@ -273,23 +273,27 @@ SSTFs = sum((Fs-FsMean).^2);
 RMSFs = sqrt(sum((Fs_sim-Fs).^2)/NFs);
 RFs = 1 - SSresFs/SSTFs;
 
+
+
+
 if figures(5)
     figure()
-    subplot(2,1,1)
+    subplot(3,1,1)
     hold on
     plot(z_pos,Fs_sim)
     plot(z_pos,Fs)
-    legend('Simulation selon les valeurs calculees','Simulation selon les valeurs mesurees')
+    legend('Simulation selon les valeurs calculees','Simulation selon les valeurs mesurees2')
     title('Comparaison entre valeurs calculees et mesurees')
     xlabel('Distance du capteur (m)')
     ylabel('Fs (N)')
     hold off
-    subplot(2,1,2)
+    subplot(3,1,2)
     plot(z_pos,Fs_sim-Fs)
     ErreurText = sprintf('Coefficient de determination R2 : %.4f\nValeur RMS : %.4f\t', RFs,RMSFs);
     legend(ErreurText)
     xlabel('Distance du capteur (m)')
     ylabel('Fs (N)')
+   
 end
 
 if displays(4)
@@ -333,20 +337,59 @@ end
     as3 = a3(4);
     
 save('CoefficientsActionneurs.mat','ae0','ae1','ae2','ae3','as0','as1','as2','as3','be1')
-
 %% comparaison lineaire et non lineaire
 
+
+
 Isim = -1;
+
 zsim = 0:0.0001:0.03;
 
+
+
 Fenonlineairesim = ((Isim^2+be1*abs(Isim))*sign(Isim))./(ae0 + ae1.*zsim + ae2.*zsim.^2 + ae3.*zsim.^3);
+
 Fsnonlineairesim = -1./(as_0 + as_1.*zsim + as_2.*zsim.^2 + as_3.*zsim.^3);
+
 Fnonlineairesim = Fenonlineairesim+Fsnonlineairesim;
 
+%Ajouter par Samuel pour comparer l'actionneur linéaire au non linéaire
+
+load('CoefficientsActionneurs.mat')
+
+syms F I z
+ze = 0.0152;
+Fe = -1.41591;
+Ie = -0.491728;
+
+Part1 = (2*Ie+be1)/(ae0+ae1*ze+ae2*ze.^2+ae3*ze.^3); 
+Part2 = ((3*as3*ze.^2+2*as2*ze+as1)/(as0+as1*ze+as2*ze.^2+as3*ze.^3).^2)-((Ie.^2-be1*Ie)*(3*ae3*ze.^2+2*ae2*ze+ae1)/((ae0+ae1*ze+ae2*ze.^2+ae3*ze.^3).^2));
+
+%Fs_Lin = (z_pos-ze)*Part2
+
+F = (Isim-Ie)*Part1 + (zsim-ze)*Part2 + Fe;
+
 if figures(6)
+
     figure()
+
     hold on
+
     plot(zsim,Fnonlineairesim)
-    plot(zsim,Fnonlineairesim)      %lineaire
+
+    plot(zsim,F)      %lineaire
+
 end
-    
+
+
+if figures(7)
+
+    figure()
+
+    hold on
+
+    plot(zsim,Fnonlineairesim-F)
+
+    title('Erreur')      %lineaire
+
+end
