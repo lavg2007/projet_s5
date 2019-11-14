@@ -17,8 +17,12 @@ Pzeq = .015;            %en metres
 %Exemple de trajectoire
 t_des     = [0:1:8]'*5;
 x_des     = [t_des, [0 0 0.5 1  0 -1 0 1 0]'*0.05];
-y_des     = [t_des, [0 0 0 0 -1  0 1 0 0]'*0.05];
+y_des     = [t_des, [0 0 0.5 0 -1  0 1 0 0]'*0.05];
 z_des     = [t_des, [1 1 1 1  1  1 1 1 1]'*.015];
+% t_des     = [0:1:8]'*5;
+% x_des     = [t_des, xSeq*ones([9 1])];
+% y_des     = [t_des, ySeq*ones([9 1])];
+% z_des     = [t_des, [1 1 1 1  1  1 1 1 1]'*.015];
 tfin = 50;
 
 %initialisation
@@ -68,6 +72,10 @@ D_dec = [0];
 
 
 tf_sphere = tf(ss(A_sphere, B_sphere, C_sphere, D_sphere));
+tf_x = tf_sphere(1,2);
+tf_dx = tf_sphere(3,2);
+tf_y = tf_sphere(2,1);
+tf_dy = tf_sphere(4,1);
 tf_phi = tf(ss(A_phi, B_phi, C_dec, D_dec));
 tf_theta = tf(ss(A_theta, B_theta, C_dec, D_dec));
 tf_z = tf(ss(A_z, B_z, C_dec, D_dec));
@@ -85,9 +93,9 @@ vp = eig(A)
 % set_param('DYNctl_ver4_etud_obfusc','AlgebraicLoopSolver','LineSearch')
 % sim('DYNctl_ver4_etud_obfusc')
 disp('Simulation...')
-open_system('SimulationV3')
-set_param('SimulationV3','AlgebraicLoopSolver','TrustRegion')
-sim('SimulationV3')
+open_system('SimulationV4')
+set_param('SimulationV4','AlgebraicLoopSolver','TrustRegion')
+sim('SimulationV4')
 
 %% Plot test
 % figure()
@@ -155,15 +163,32 @@ plot(tsim, y_des_out1)
 plot(tsim, ylineaire(:,5))
 
 figure()
-subplot(2,1,1)
+subplot(3,1,1)
+plot(tsim, ylineaire1(:,1))
+
+subplot(3,1,2)
+plot(tsim, ylineaire1(:,2))
+
+subplot(3,1,3)
+plot(tsim, ylineaire1(:,3))
+
+figure()
+subplot(4,1,1)
 hold on
 plot(tsim, x_des_out1)
 plot(tsim, ylineaire1(:,4))
 
-subplot(2,1,2)
+subplot(4,1,2)
 hold on
 plot(tsim, y_des_out1)
 plot(tsim, ylineaire1(:,5))
+
+subplot(4,1,3)
+plot(tsim, ylineaire1(:,6))
+
+subplot(4,1,4)
+plot(tsim, ylineaire1(:,7))
+
 
 
 % %affichage
