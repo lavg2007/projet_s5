@@ -44,7 +44,7 @@ SP = eval(subs(SP))
 A_sphere_x =  [0 1; 0 0];
 B_sphere_x = [0;SP(1,2)];
 C_sphere_x = eye(2);
-D_sphere_x = [0;0];
+D_sphere_x = zeros(2);
 
 A_sphere_y = [0 1; 0 0];
 B_sphere_y = [0; SP(2,1)];
