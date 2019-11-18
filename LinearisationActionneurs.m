@@ -5,46 +5,48 @@ clear all
 clc
 
 %définir variable
-syms I Ie DeltaI 
+syms I IE DeltaI 
 syms F Fe DeltaF
-syms Z Ze DeltaZ
+syms Z ZE DeltaZ
 
 symbolique = 1
 
 if symbolique == 1
-    syms ae0 ae1 ae2 ae3 be1
-    syms as0 as1 as2 as3
+    syms AE0 AE1 AE2 AE3 BE1
+    syms AS0 AS1 AS2 AS3
 else
     load('CoefficientsActionneurs.mat')
 end
 
 
 
-fek = (I.^2 + be1*I)/(ae0+ae1*Z+ae2*Z.^2+ae3*Z.^3)
+fek = (I.^2 + BE1*I)/(AE0+AE1*Z+AE2*Z.^2+AE3*Z.^3)
 
-fsk = -1/(as0+as1*Z+as2*Z.^2+as3*Z.^3)
-
-
+fsk = -1/(AS0+AS1*Z+AS2*Z.^2+AS3*Z.^3)
 
 
-TaylorFek = subs(subs(fek, I, Ie), Z, Ze) + subs(subs(diff(fek, I), I, Ie), Z, Ze)*(I-Ie) + subs(subs(diff(fek, Z), I, Ie), Z, Ze)*(Z-Ze)
 
-TaylorFsk = subs(fsk, Z, Ze) + subs(diff(fsk, Z), Z, Ze)*(Z-Ze)
+TaylorFek = subs(subs(fek, I, IE), Z, ZE) + subs(subs(diff(fek, I), I, IE), Z, ZE)*(I-IE) + subs(subs(diff(fek, Z), I, IE), Z, ZE)*(Z-ZE)
+TaylorFsk = subs(fsk, Z, ZE) + subs(diff(fsk, Z), Z, ZE)*(Z-ZE)
+
 
 
 F = TaylorFek + TaylorFsk
 
 
+
 %Le point 4 ne s'applique pas
 
 %Point 5
-EquationEquilibre = subs(subs(F, I-Ie, 0), Z-Ze, 0)
+EquationEquilibre = subs(subs(F, I-IE, 0), Z-ZE, 0)
 
 pretty(EquationEquilibre)
 
 EquationDynamique = F - EquationEquilibre
 
 pretty(EquationDynamique)
+
+save('EquationLinearisation.mat','EquationDynamique')
 
 
 

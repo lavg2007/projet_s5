@@ -341,7 +341,7 @@ save('CoefficientsActionneurs.mat','ae0','ae1','ae2','ae3','as0','as1','as2','as
 
 
 
-Isim = -1;
+Isim = -0.491728; %Anciennement -0.491728, maintenant Ie
 
 zsim = 0:0.0001:0.03;
 
@@ -356,18 +356,39 @@ Fnonlineairesim = Fenonlineairesim+Fsnonlineairesim;
 %Ajouter par Samuel pour comparer l'actionneur linéaire au non linéaire
 
 load('CoefficientsActionneurs.mat')
-
-syms F I z
+load('EquationLinearisation.mat')
+syms AE0 AE1 AE2 AE3 BE1
+syms AS0 AS1 AS2 AS3
+syms F I z Z IE ZE
 ze = 0.0152;
 Fe = -1.41591;
 Ie = -0.491728;
 
-Part1 = (2*Ie+be1)/(ae0+ae1*ze+ae2*ze.^2+ae3*ze.^3); 
-Part2 = ((3*as3*ze.^2+2*as2*ze+as1)/(as0+as1*ze+as2*ze.^2+as3*ze.^3).^2)-((Ie.^2-be1*Ie)*(3*ae3*ze.^2+2*ae2*ze+ae1)/((ae0+ae1*ze+ae2*ze.^2+ae3*ze.^3).^2));
+% Part1 = (2*Ie+be1)/(ae0+ae1*ze+ae2*ze.^2+ae3*ze.^3); 
+% Part2 = ((3*as3*ze.^2+2*as2*ze+as1)/(as0+as1*ze+as2*ze.^2+as3*ze.^3).^2)-((Ie.^2-be1*Ie)*(3*ae3*ze.^2+2*ae2*ze+ae1)/((ae0+ae1*ze+ae2*ze.^2+ae3*ze.^3).^2));
 
 %Fs_Lin = (z_pos-ze)*Part2
 
-F = (Isim-Ie)*Part1 + (zsim-ze)*Part2 + Fe;
+% F = (Isim-Ie)*Part1 + (zsim-ze)*Part2 + Fe; %Il y a une erreur dans
+% l'équation mais le version qui vient de EquationDynamique est ok
+Flin = EquationDynamique;
+Flin = subs(Flin, AE3, ae3);
+Flin = subs(Flin, AE2, ae2);
+Flin = subs(Flin, AE1, ae1);
+Flin = subs(Flin, AE0, ae0);
+
+Flin = subs(Flin, AS3, as3);
+Flin = subs(Flin, AS2, as2);
+Flin = subs(Flin, AS1, as1);
+Flin = subs(Flin, AS0, as0);
+Flin = subs(Flin, BE1, be1);
+
+Flin = subs(Flin, Z, zsim);
+Flin = subs(Flin, I, Isim);
+Flin = subs(Flin, IE, Ie);
+Flin = subs(Flin, ZE, ze)
+
+Flin = Flin + Fe
 
 if figures(6)
 
@@ -377,7 +398,13 @@ if figures(6)
 
     plot(zsim,Fnonlineairesim)
 
-    plot(zsim,F)      %lineaire
+    plot(zsim, Flin)
+    
+    xlabel('Position en mètre')
+    ylabel('Force en N')
+    title('Simulation vs linéaire')
+    legend('Simulation non-linéaire','Simulation linéaire')
+    
 
 end
 
@@ -387,9 +414,10 @@ if figures(7)
     figure()
 
     hold on
+    plot(zsim,Fnonlineairesim-Flin)
 
-    plot(zsim,Fnonlineairesim-F)
-
-    title('Erreur')      %lineaire
+    title('Erreur entre simulation et version linéaire')      %lineaire
+    xlabel('Position en mètre')
+    ylabel('Force en N')
 
 end
