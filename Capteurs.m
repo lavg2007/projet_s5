@@ -2,7 +2,7 @@
 
 %%
 
-Taylor, Fourier, sinus, exponentielle,...
+% Taylor, Fourier, sinus, exponentielle,...
 
 %% A MODIFIER, A ETE FAIT AVEC UN POLYNOME MAIS NE DOIS PAS L'AVOIR ETE
 load('capteur.mat')
