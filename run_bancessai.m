@@ -83,6 +83,23 @@ tf_sphere_y = tf(ss(A_sphere_y, B_sphere_y, C_sphere_y, D_sphere_y));
 tf_phi = tf(ss(A_phi, B_phi, C_dec, D_dec));
 tf_theta = tf(ss(A_theta, B_theta, C_dec, D_dec));
 tf_z = tf(ss(A_z, B_z, C_dec, D_dec));
+
+%% calcul des compensateurs (sphere
+
+% spécifications 
+ts_s = 2 % entre 2 et 4
+zeta_s = 0.9
+wn_s = -log(0.02)/(zeta_s*ts_s)
+
+% calcul des paramètres
+num_y = 7.007;
+Kv_y = 2*zeta_s*wn_s/num_y;
+Kp_y = wn_s^2/num_y;
+
+num_x = -7.007;
+Kv_x = 2*zeta_s*wn_s/num_x;
+Kp_x = wn_s^2/num_x;
+
 %%
 figure
 pzmap(ss(A,B,C,D))
@@ -155,45 +172,45 @@ plot(tsim, z_des_out1)
 plot(tsim, ynonlineaire2(:,3))
 
 
-figure()
-subplot(2,1,1)
-hold on
-plot(tsim, x_des_out1)
-plot(tsim, ylineaire(:,4))
-
-subplot(2,1,2)
-hold on
-plot(tsim, y_des_out1)
-plot(tsim, ylineaire(:,5))
-
-figure()
-subplot(3,1,1)
-plot(tsim, ylineaire1(:,1))
-
-subplot(3,1,2)
-plot(tsim, ylineaire1(:,2))
-
-subplot(3,1,3)
-plot(tsim, ylineaire1(:,3))
-
-figure()
-subplot(4,1,1)
-hold on
-plot(tsim, x_des_out1)
-plot(tsim, ylineaire1(:,4))
-
-subplot(4,1,2)
-hold on
-plot(tsim, y_des_out1)
-plot(tsim, ylineaire1(:,5))
-
-subplot(4,1,3)
-plot(tsim, ylineaire1(:,6))
-
-subplot(4,1,4)
-plot(tsim, ylineaire1(:,7))
-
-
+% figure()
+% subplot(2,1,1)
+% hold on
+% plot(tsim, x_des_out1)
+% plot(tsim, ylineaire(:,4))
+% 
+% subplot(2,1,2)
+% hold on
+% plot(tsim, y_des_out1)
+% plot(tsim, ylineaire(:,5))
+% 
+% figure()
+% subplot(3,1,1)
+% plot(tsim, ylineaire1(:,1))
+% 
+% subplot(3,1,2)
+% plot(tsim, ylineaire1(:,2))
+% 
+% subplot(3,1,3)
+% plot(tsim, ylineaire1(:,3))
+% 
+% figure()
+% subplot(4,1,1)
+% hold on
+% plot(tsim, x_des_out1)
+% plot(tsim, ylineaire1(:,4))
+% 
+% subplot(4,1,2)
+% hold on
+% plot(tsim, y_des_out1)
+% plot(tsim, ylineaire1(:,5))
+% 
+% subplot(4,1,3)
+% plot(tsim, ylineaire1(:,6))
+% 
+% subplot(4,1,4)
+% plot(tsim, ylineaire1(:,7))
+% 
+% 
 
 % %affichage
 %trajectoires

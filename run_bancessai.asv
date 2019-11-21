@@ -44,7 +44,7 @@ SP = eval(subs(SP))
 A_sphere_x =  [0 1; 0 0];
 B_sphere_x = [0;SP(1,2)];
 C_sphere_x = eye(2);
-D_sphere_x = zeros(2);
+D_sphere_x = [0;0];
 
 A_sphere_y = [0 1; 0 0];
 B_sphere_y = [0; SP(2,1)];
@@ -83,6 +83,24 @@ tf_sphere_y = tf(ss(A_sphere_y, B_sphere_y, C_sphere_y, D_sphere_y));
 tf_phi = tf(ss(A_phi, B_phi, C_dec, D_dec));
 tf_theta = tf(ss(A_theta, B_theta, C_dec, D_dec));
 tf_z = tf(ss(A_z, B_z, C_dec, D_dec));
+
+%% calcul des compensateurs
+
+%% spécifications de la sphère
+ts_s = 2 % entre 2 et 4
+zeta_s = 0.9
+wn_s = -log(0.02)/(zeta_s*ts_s)
+
+
+num_s = 7.007;
+Kv = 2*zeta_s*wn_s/num_s;
+Kp = wn_s^2/num_s;
+
+y_comp = tf([num_s*Kp],[1 num_s*Kv num_s*Kp])
+figure
+pzmap(y_com)
+
+
 %%
 figure
 pzmap(ss(A,B,C,D))
