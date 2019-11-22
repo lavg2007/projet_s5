@@ -84,12 +84,12 @@ tf_phi = tf(ss(A_phi, B_phi, C_dec, D_dec));
 tf_theta = tf(ss(A_theta, B_theta, C_dec, D_dec));
 tf_z = tf(ss(A_z, B_z, C_dec, D_dec));
 
-%% calcul des compensateurs (sphere
+%% calcul des compensateurs (sphere)
 
 % spécifications 
-ts_s = 2 % entre 2 et 4
-zeta_s = 0.9
-wn_s = -log(0.02)/(zeta_s*ts_s)
+ts_s = 2; % entre 2 et 4
+zeta_s = 0.9;
+wn_s = -log(0.02)/(zeta_s*ts_s);
 
 % calcul des paramètres
 num_y = 7.007;
@@ -100,10 +100,16 @@ num_x = -7.007;
 Kv_x = 2*zeta_s*wn_s/num_x;
 Kp_x = wn_s^2/num_x;
 
+%% calcul des compensateurs (plaque)
+
+
+
+
+
 %%
-figure
-pzmap(ss(A,B,C,D))
-vp = eig(A)
+% figure
+% pzmap(ss(A,B,C,D))
+% vp = eig(A)
 
 
 %Calcul des compensateurs
