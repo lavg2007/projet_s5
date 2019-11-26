@@ -1,0 +1,31 @@
+clear
+clc
+close all
+
+tn = [0:7]'
+xn = [1 0 1      0 -1 -0.5   -0.25   0]'*0.05;
+yn = [0 0 0.25   1 -1 -0.4   0.2     0.1]'*0.05';
+% xn = [0 1 2 3 4 5]';
+% yn = [0 2.608 1.350 -1.909 -2.338 0.6988]';
+
+
+Ax = Trajectoire(tn,xn)
+Ay = T
+N = numel(xn);
+
+t = [0:0.01:7];
+f = zeros(size(t));
+for i = 1:N
+    f = f + A(i)*t.^(i-1);
+end
+
+
+
+
+figure
+hold on
+plot(tn, xn,'x')
+plot(t, f)
+% plot(t,fx)
+% xlim([-0.1 0.1]);
+% ylim([-0.1 0.1]);
