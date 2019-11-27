@@ -1,4 +1,4 @@
-function [ G, Ka ] = AvanceDePhase( num,den,phi,Wn,zeta,Wa,s,ajustement )
+function [ Ga ] = DoubleAvanceDePhase( num,den,phi,Wn,zeta,Wa,s,ajustement )
 %Compensateur avance de phase
 %   [ G, Ka ] = AvanceDePhase( num,den,phi,Wn,zeta,Wa,s )
 
@@ -16,21 +16,22 @@ for i=1:length(p)
 end
 
 phase = (phasez_sum - phasep_sum)*180/pi;
-phase = phase(1)
-deltaphi = -180 - phase + ajustement
+phase = phase(1);
+deltaphi = (-180 - phase + ajustement)/2;
 alpha = 180 - phi;
 
 phiz = (alpha+deltaphi)/2;
 phip = (alpha-deltaphi)/2;
 
-z = -zeta*Wn-Wa/tand(phiz)
-p = -zeta*Wn-Wa/tand(phip)
+z = -zeta*Wn-Wa/tand(phiz);
+p = -zeta*Wn-Wa/tand(phip);
 
 numav = [1 -z]; 
 denav = [1 -p];
 G = tf(numav,denav);
+G = G*G;
 
-Ka = 1/norm((s(1)-z)/(s(1)-p)*num/polyval(den,s(1)))
+Ka = 1/norm(((s(1)-z)/(s(1)-p))^2*num/polyval(den,s(1)));
 
 Ga = G*Ka;
 
