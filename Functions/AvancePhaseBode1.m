@@ -8,7 +8,7 @@ wg_s = 2*zeta_s*wn_s/tand(PM_s);
 
 K_s = 1/(norm(polyval(FTBO.Numerator{:},1i*wg_s)/polyval(FTBO.Denominator{:},1i*wg_s)));
 
-[GM_Ks,PM_Ks,wp_Ks,wg_Ks] = margin(FTBO*K_s);
+[~,PM_Ks,~,~] = margin(FTBO*K_s);
 
 if PM_Ks >= PM_s
     disp('No need for a FT, just a gain')
@@ -23,8 +23,8 @@ a = (1-sind(deltaphi))/(1+sind(deltaphi));
 
 T = 1/(wg_s*sqrt(a));
 
-z = -1/T
-p = -1/(a*T)
+z = -1/T;
+p = -1/(a*T);
 Ka = K_s/sqrt(a);
 
 Ga = tf([1 -z],[1 -p]);

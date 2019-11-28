@@ -18,8 +18,8 @@ B;
 
 T = marge/wg_s;
 
-z = -1/T
-p = -1/(B*T)
+z = -1/T;
+p = -1/(B*T);
 Kr = K_s/B;
 
 Gr = tf([1 -z],[1 -p]);

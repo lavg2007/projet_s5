@@ -31,3 +31,7 @@ eqFC = sign(IBeq)*(ICeq^2 + be1*abs(ICeq))/(ae0 + ZCeq*ae1 + ZCeq^2*ae2 + ZCeq^3
 VAeq = double(IAeq/RA)
 VBeq = double(IBeq/RB)
 VCeq = double(ICeq/RC)
+
+VAeq = double(IAeq*RA)
+VBeq = double(IBeq*RB)
+VCeq = double(ICeq*RC)

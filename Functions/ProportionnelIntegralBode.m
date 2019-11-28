@@ -8,7 +8,7 @@ function [ Gr ] = ProportionnelIntegralBode( FTBO,wg,facteur )
 
 z = -wg/facteur;
 
-Kp = 1/norm(((wg*1i)-z)/((wg*1i)))
+Kp = 1/norm(((wg*1i)-z)/((wg*1i)));
 
 G2 = tf([1 -z],[1 0]);
 Gr = Kp*G2;

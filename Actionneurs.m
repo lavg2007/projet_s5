@@ -17,7 +17,7 @@ end
 % figure 9:   
 % figure 10:   
 %figures    1 2 3 4 5 6 7 8 9 10
-figures = [ 0 0 0 0 0 1 1 0 0 0];           %Mettre 1 pour afficher et 0 pour cacher
+figures = [ 1 0 0 0 0 1 1 0 0 0];           %Mettre 1 pour afficher et 0 pour cacher
 
 % displays 1:   Erreur sur -1A
 % displays 2:   Erreur sur -2A

@@ -1,6 +1,8 @@
-function [ Gpi ] = ProportionnelIntegralV1( num,den,s,marge )
+function [ Gpi ] = ProportionnelIntegralV1( FTBO,s,marge )
 %Compensateur PI version simple
 %   [ Gpi ] = ProportionnelIntegralV1( num,den,s )
+
+[num,den] = tfdata(FTBO,'v');
 
 z = real(s(1))/marge;
 

@@ -1,6 +1,8 @@
-function [ Ga ] = DoubleAvanceDePhase( num,den,phi,Wn,zeta,Wa,s,ajustement )
+function [ Ga ] = DoubleAvanceDePhase( FTBO,phi,Wn,zeta,Wa,s,ajustement )
 %Compensateur avance de phase
 %   [ G, Ka ] = AvanceDePhase( num,den,phi,Wn,zeta,Wa,s )
+
+[num,den] = tfdata(FTBO,'v');
 
 z = roots(num);
 p = roots(den);

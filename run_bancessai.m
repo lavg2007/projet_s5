@@ -84,8 +84,13 @@ tf_phi = tf(ss(A_phi, B_phi, C_dec, D_dec));
 tf_theta = tf(ss(A_theta, B_theta, C_dec, D_dec));
 tf_z = tf(ss(A_z, B_z, C_dec, D_dec));
 
+[num_phi,den_phi] = tfdata(tf_phi,'v');
+[num_z,den_z] = tfdata(tf_z,'v');
+
 save('Plaque.mat','tf_phi','tf_theta','tf_z')
 load('Compensateur.mat')
+Uinv = inv(U);
+
 %% calcul des compensateurs (sphere
 
 % spécifications 
