@@ -42,49 +42,52 @@ Wa_angle = Wn_angle*sqrt(1-zeta_angle^2);
 s_angle = [-zeta_angle*Wn_angle + Wa_angle*1i; -zeta_angle*Wn_angle - Wa_angle*1i];
 
 %% compensateur en phi
-% 
-% % AVANCE DE PHASE #1
-% 
-% tf_compensateur_phi1 = DoubleAvanceDePhase( tf_phi,phi_angle,Wn_angle,zeta_angle,Wa_angle,s_angle,6.2)*1.12;     %marge  = 10  %marge = 15 gain = 0.7
-% tf_phi_compense = tf_phi*tf_compensateur_phi1;
-% 
-% % PI (CHANGEMENT DE CLASSE POUR ERP)
-% 
-% tf_compensateur_phi2 = ProportionnelIntegralV1( tf_phi_compense,s_angle,5);    %marge = 5  gain = 2
-% tf_phi_compense = tf_phi_compense*tf_compensateur_phi2;
-% 
-% tf_compensateur_phi = tf_compensateur_phi1*tf_compensateur_phi2*1.7;
-% tf_phi_compense = tf_phi*tf_compensateur_phi;
-% 
-% % figure()
-% % hold on
-% % plot(s_angle,'p')
-% % rlocus(tf_phi_compense)
+
+% AVANCE DE PHASE #1
+
+tf_compensateur_phi1 = DoubleAvanceDePhase( tf_phi,phi_angle,Wn_angle,zeta_angle,Wa_angle,s_angle,6.2)*1.12;     %marge  = 10  %marge = 15 gain = 0.7
+tf_phi_compense = tf_phi*tf_compensateur_phi1;
+
+% PI (CHANGEMENT DE CLASSE POUR ERP)
+
+tf_compensateur_phi2 = ProportionnelIntegralV1( tf_phi_compense,s_angle,5);    %marge = 5  gain = 2
+tf_phi_compense = tf_phi_compense*tf_compensateur_phi2;
+
+tf_compensateur_phi = tf_compensateur_phi1*tf_compensateur_phi2*1.7;
+tf_phi_compense = tf_phi*tf_compensateur_phi;
+
+% figure()
+% hold on
+% plot(s_angle,'p')
+% rlocus(tf_phi_compense)
 % 
 % figure()
 % t = (0:0.001:0.5)';
 % step(feedback(tf_phi_compense,1),t)
-% 
-% stepInfoFTBF = stepinfo(feedback(tf_phi_compense,1));
-% marginInfoFTBO = allmargin(tf_phi_compense);
-% GMFTBO = 20*log10(marginInfoFTBO.GainMargin);
-% PMFTBO = (marginInfoFTBO.PhaseMargin);
-% 
-% disp(['Overshoot    |   5.0   |    ' num2str(stepInfoFTBF.Overshoot,4)])   
-% disp(['SettlingTime |  0.030  |    ' num2str(stepInfoFTBF.SettlingTime,4)])  
-% disp(['PeakTime     |  0.025  |    ' num2str(stepInfoFTBF.PeakTime,4)])  
-% disp(['RiseTime     |  0.020  |    ' num2str(stepInfoFTBF.RiseTime,4)]) 
-% disp(['GainMargin   |   10    |    ' num2str(GMFTBO,2)])
-% disp(['PhaseMargin  |   25    |    ' num2str(PMFTBO,2)])
-% disp([' ------ ']) 
-% 
-% figure()
-% margin(tf_phi_compense)
-% 
-% % [~, erp, t2 ] = rampinfo( tf_phi_compense, 20)
-% % testdiscret(tf_compensateur_phi)
-% 
-% [num_compensateur_angle,den_compensateur_angle] = tfdata(tf_compensateur_phi,'v');
+
+figure()
+nyquist(tf_phi_compense)
+
+stepInfoFTBF = stepinfo(feedback(tf_phi_compense,1));
+marginInfoFTBO = allmargin(tf_phi_compense);
+GMFTBO = 20*log10(marginInfoFTBO.GainMargin);
+PMFTBO = (marginInfoFTBO.PhaseMargin);
+
+disp(['Overshoot    |   5.0   |    ' num2str(stepInfoFTBF.Overshoot,4)])   
+disp(['SettlingTime |  0.030  |    ' num2str(stepInfoFTBF.SettlingTime,4)])  
+disp(['PeakTime     |  0.025  |    ' num2str(stepInfoFTBF.PeakTime,4)])  
+disp(['RiseTime     |  0.020  |    ' num2str(stepInfoFTBF.RiseTime,4)]) 
+disp(['GainMargin   |   10    |    ' num2str(GMFTBO,2)])
+disp(['PhaseMargin  |   25    |    ' num2str(PMFTBO,2)])
+disp([' ------ ']) 
+
+figure()
+margin(tf_phi_compense)
+
+% [~, erp, t2 ] = rampinfo( tf_phi_compense, 20)
+% testdiscret(tf_compensateur_phi)
+
+[num_compensateur_angle,den_compensateur_angle] = tfdata(tf_compensateur_phi,'v');
 
 %% Security specs hauteur
 
@@ -117,28 +120,28 @@ tf_z_compense = tf_compensateur_z*tf_z;
 figure()
 margin(tf_z_compense)
 
-figure()
-opt = stepDataOptions('StepAmplitude',0.01);
-hold on
-step(feedback(tf_z_compense,1),0.5,opt)  % Step response with step amplitude of 0.01;
-yline(0.01+erp_echelon_hauteur,'linewidth',1);
-yline(0.01-erp_echelon_hauteur,'linewidth',1);
-
 % figure()
-% nyquist(tf_z_compense)
+% opt = stepDataOptions('StepAmplitude',0.01);
+% hold on
+% step(feedback(tf_z_compense,1),0.5,opt)  % Step response with step amplitude of 0.01;
+% yline(0.01+erp_echelon_hauteur,'linewidth',1);
+% yline(0.01-erp_echelon_hauteur,'linewidth',1);
+
+figure()
+nyquist(tf_z_compense)
 
 marginInfoFTBO = allmargin(tf_z_compense);
 GMFTBO = 20*log10(marginInfoFTBO.GainMargin);
 PMFTBO = (marginInfoFTBO.PhaseMargin);
 PMFFTBO = (marginInfoFTBO.PMFrequency);
 
-disp(['GainMargin   |   10    |    ' num2str(max(GMFTBO),2)])
+disp(['GainMargin   |   10    |    ' num2str(GMFTBO,2)])
 disp(['PhaseMargin  |   25    |    ' num2str(PMFTBO,2)])
 disp(['PMFrequency  |   185   |    ' num2str(PMFFTBO,3)])
 disp([' ------ ']) 
 
-testdiscret(tf_compensateur_z)
+% testdiscret(tf_compensateur_z)
 
 [num_compensateur_z,den_compensateur_z] = tfdata(tf_compensateur_z,'v');
 
-% save('Compensateur.mat','num_compensateur_z','den_compensateur_z','num_compensateur_angle','den_compensateur_angle')
+save('Compensateur.mat','num_compensateur_z','den_compensateur_z','num_compensateur_angle','den_compensateur_angle')
