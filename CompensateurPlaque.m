@@ -1,10 +1,6 @@
-clc
-clear all
-close all
 warning('off','all')
 %% loading functions and tfs
 
-load('Plaque.mat')
 addpath('Functions')
 
 %% Condideration importantes
@@ -67,6 +63,7 @@ tf_phi_compense = tf_phi*tf_compensateur_phi;
 
 figure()
 nyquist(tf_phi_compense)
+grid on
 
 stepInfoFTBF = stepinfo(feedback(tf_phi_compense,1));
 marginInfoFTBO = allmargin(tf_phi_compense);
@@ -84,8 +81,7 @@ disp([' ------ '])
 figure()
 margin(tf_phi_compense)
 
-% [~, erp, t2 ] = rampinfo( tf_phi_compense, 20)
-% testdiscret(tf_compensateur_phi)
+testdiscret(tf_compensateur_phi)
 
 [num_compensateur_angle,den_compensateur_angle] = tfdata(tf_compensateur_phi,'v');
 
@@ -108,11 +104,14 @@ tf_z_compense = tf_z*tf_compensateur_z1;
 tf_compensateur_z2 = AvancePhaseBode1( tf_z_compense, PM_hauteur, BW_z, 7 );
 tf_z_compense = tf_z_compense*tf_compensateur_z2;
 
-% tf_compensateur_z3 = RetardPhaseBode1( tf_z_compense, erp_echelon_hauteur, Wg_hauteur, 10 );      
-% tf_z_compense = tf_z_compense*tf_compensateur_z3;
+if PI_z
+    tf_compensateur_z3 = ProportionnelIntegralBode( tf_z_compense,Wg_hauteur, 10 );
+    tf_z_compense = tf_z_compense*tf_compensateur_z3;
 
-tf_compensateur_z3 = ProportionnelIntegralBode( tf_z_compense,Wg_hauteur, 10 );
-tf_z_compense = tf_z_compense*tf_compensateur_z3;
+    else 
+    tf_compensateur_z3 = RetardPhaseBode1( tf_z_compense, erp_echelon_hauteur, Wg_hauteur, 10 );      
+    tf_z_compense = tf_z_compense*tf_compensateur_z3;
+end
 
 tf_compensateur_z = tf_compensateur_z1*tf_compensateur_z2*tf_compensateur_z3;
 tf_z_compense = tf_compensateur_z*tf_z;
@@ -140,7 +139,7 @@ disp(['PhaseMargin  |   25    |    ' num2str(PMFTBO,2)])
 disp(['PMFrequency  |   185   |    ' num2str(PMFFTBO,3)])
 disp([' ------ ']) 
 
-% testdiscret(tf_compensateur_z)
+testdiscret(tf_compensateur_z)
 
 [num_compensateur_z,den_compensateur_z] = tfdata(tf_compensateur_z,'v');
 

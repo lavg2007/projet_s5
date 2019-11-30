@@ -1,49 +1,64 @@
-clc
+close all
 clear all
+clc
 
-%% Nomenclature des variables
-% 
-% masseS      %masse de la sphere
-% masseP      %masse de la plaque
-% inertiePx   %inertie de la plaque autour de l'axe x
-% inertiePy   %inertie de la plaque autour de l'axe y
-% XK, YK, ZK  %position inertielle des elements fixes K (K = A, B, C, D, E, F)
-% Px, Py, Pz  %position de la sphere dans le repere inertiel
-% Vx, Vy, Vz  %vitesse de la sphere dans le repere inertiel
-% Ax, Ay      %angle de rotation de la plaque autour de l'axe Ix et Iy
-% Wx, Wy      %vitesse angulaire de la plaque autour de l'axe Ix et Iy
-% FA, FB, FC  %forces appliquee par les actionneurs sur la plaque (positif vers le bas)
-% Ma, MB, MC  %couples appliquee par les actionneurs sur la plaque
-% VA, VB, VC  %tension electrique appliquee aux actionneurs
-% IA, IB, IC  %courant electrique dans les actionneurs
-%
-%_mes         %refere a des variables mesurees
-%_des         %refere aux variables desirees ou commandees
-%_ini         %refere aux variables initiales
-%_fin         %refere aux variables finales
-%_eq          %refere aux variables a l'equilibre
-%
-%% Declaration des variables parametriques
+% Position à l'équilibre de la sphère (pour tests statiques)
+sig = 1;         % Présence (1) ou non (0) de la sphère
+xSeq = 0.000;      % Position x de la sphère à l'équilibre en metres
+ySeq = 0.000;      % Position y de la sphère à l'équilibre en metres
+PI_z = 0;          % Erreur en rp pour le compensateur en z = 0 pour PI_z = 1
 
-syms masseS masseP inertiePx inertiePy 
-syms XA YA ZA 
-syms XB YB ZB 
-syms XC YC ZC 
-syms XD YD ZD 
-syms XE YE ZE 
-syms XF YF ZF 
-syms Px Py Pz  
-syms Vx Vy Vz 
-syms Ax Ay Wx Wy    
-syms FA FB FC
-syms MA MB MC
-syms VA VB VC
-syms IA IB IC 
+%Point d'opération choisi pour la plaque
+Axeq = 0;               %en degres
+Ayeq = 0;               %en degres
+Pzeq = .015;            %en metres
 
+%Exemple de trajectoire
+t_des     = [0:1:8]'*5;
+x_des     = [t_des, [0 0 0.5 1  0 -1 0 1 0]'*0.05];
+y_des     = [t_des, [0 0 0.5 0 -1  0 1 0 0]'*0.05];
+z_des     = [t_des, [1 1 1 1  1  1 1 1 1]'*.015];
+tfin = 50;
+
+%initialisation
+disp('initialisation...')
+bancEssaiConstantes;
+load('CoefficientsActionneurs.mat')
+
+%bancessai_ini  %faites tous vos calculs de modele ici
+CalculTFs;
+CompensateurPlaque;
+Uinv = inv(U);
+CompensateurSphere;
+
+%% simulation
+disp('Simulation...')
+open_system('SimulationV4')
+set_param('SimulationV4','AlgebraicLoopSolver','LineSearch')
+sim('SimulationV4')
 %%
+% figure()
+% subplot(3,1,1)
+% hold on
+% plot(tsim, x_des_out1)
+% plot(tsim, ynonlineaire2(:,7))
 
+% subplot(3,1,2)
+% hold on
+% plot(tsim, y_des_out1)
+% plot(tsim, ynonlineaire2(:,8))
+% 
+subplot(3,1,3)
+hold on
+plot(tsim, z_des_out1)
+plot(tsim, ynonlineaire2(:,3))
 
+subplot(3,1,1)
+hold on
+plot(tsim, Ax_des1)
+plot(tsim, ynonlineaire2(:,1))
 
-
-
-
+subplot(3,1,2)
+hold on
+plot(tsim, Ay_des1)
+plot(tsim, ynonlineaire2(:,2))
