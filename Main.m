@@ -24,26 +24,40 @@ clear all
 clc
 
 % Position à l'équilibre de la sphère (pour tests statiques)
-sig = 0;         % Présence (1) ou non (0) de la sphère
-xSeq = 0.000;      % Position x de la sphère à l'équilibre en metres
-ySeq = 0.000;      % Position y de la sphère à l'équilibre en metres
+% sig = 0;         % Présence (1) ou non (0) de la sphère
+% xSeq = 0.0;      % Position x de la sphère à l'équilibre en metres
+% ySeq = 0.0;      % Position y de la sphère à l'équilibre en metres
+% PI_z = 1;        % Erreur en rp pour le compensateur en z = 0 pour PI_z = 1
+% save('PIz.mat','PI_z')
+% 
+% %Point d'opération choisi pour la plaque
+% Axeq = 0;               %en degres
+% Ayeq = 0;               %en degres
+% Pzeq = 0.012;    
+
+
+
+% Position à l'équilibre de la sphère (pour tests statiques)
+sig = 1;         % Présence (1) ou non (0) de la sphère
+xSeq = 0.003;      % Position x de la sphère à l'équilibre en metres
+ySeq = 0.050;      % Position y de la sphère à l'équilibre en metres
 PI_z = 1;          % Erreur en rp pour le compensateur en z = 0 pour PI_z = 1
 save('PIz.mat','PI_z')
 
 %Point d'opération choisi pour la plaque
-Axeq = 0;               %en degres
-Ayeq = 0;               %en degres
-Pzeq = .015;            %en metres
+Axeq = 1;               %en degres
+Ayeq = 0.5;               %en degres
+Pzeq = 0.011;            %en metres
 
 %Exemple de trajectoire
-% t_des     = [0:1:8]'*5;
-% x_des     = [t_des, [0 0 0.5 1  0 -1 0 1 0]'*0.05];
-% y_des     = [t_des, [0 0 0.5 0 -1  0 1 0 0]'*0.05];
-% z_des     = [t_des, [1 1 1 1  1  1 1 1 1]'*.015];
-% tfin = 50;
+t_des     = [0:1:8]'*5;
+x_des     = [t_des, [0 0 0.5 1  0 -1 0 1 0]'*0.05];
+y_des     = [t_des, [0 0 0.5 0 -1  0 1 0 0]'*0.05];
+z_des     = [t_des, [1 1 1 1  1  1 1 1 1]'*.015];
+tfin = 50;
 
-x_d     = [-1:0.2:1]'*0.05;
-y_d     = [0 0.2 0.5 0 -1  0 1 0 0 0.2 -1]'*0.05;
+% x_d     = [-1:0.2:1]'*0.05;
+% y_d     = [0 0.2 0.5 0 -1  0 1 0 0 0.2 -1]'*0.05;
 
 
 %initialisation
@@ -51,13 +65,16 @@ disp('initialisation...')
 bancEssaiConstantes;
 load('CoefficientsActionneurs.mat')
 
-Ts = 2;
-[Pi,Ltr, E, Vr, Traj, tt, tab] = trajectoire(x_d,y_d,0.01,Ts);
-t_des = [0:Ts:tt]';
-x_des     = [t_des, Traj(:,1)];
-y_des     = [t_des, Traj(:,2)];
-z_des     = [t_des, ones(size(t_des))*0.015];
-tfin = tt+Ts;
+mS = 0;
+mS = 40/1000;
+
+% Ts = 2;
+% [Pi,Ltr, E, Vr, Traj, tt, tab] = trajectoire(x_d,y_d,0.01,Ts);
+% t_des = [0:Ts:tt]';
+% x_des     = [t_des, Traj(:,1)];
+% y_des     = [t_des, Traj(:,2)];
+% z_des     = [t_des, ones(size(t_des))*0.015];
+% tfin = tt+Ts;
 
 %%
 

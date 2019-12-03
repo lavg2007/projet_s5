@@ -23,6 +23,8 @@
 % Valeur des équations à l'équilibre
 load('Linearisation.mat')
 equilibre
+
+
 A = eval(subs(A));
 B = eval(subs(B));
 C = eval(subs(C));
