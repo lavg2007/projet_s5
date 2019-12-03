@@ -71,8 +71,6 @@ disp('Simulation...')
 open_system('SimulationV4')
 set_param('SimulationV4','AlgebraicLoopSolver','LineSearch')
 sim('SimulationV4')
-<<<<<<< Updated upstream
-
 %% Graphiques
 figure()
 % subplot(3,1,1)
@@ -85,7 +83,6 @@ figure()
 % plot(tsim, y_des_out1)
 % plot(tsim, ynonlineaire2(:,8))
 
-=======
 %% Figures
 
 figure()
@@ -106,7 +103,6 @@ xlabel('Temps(s)')
 ylabel('y (m)')
 legend('Désirée', 'Simulée')
 % 
->>>>>>> Stashed changes
 subplot(3,1,3)
 hold on
 plot(tsim, z_des_out1)
@@ -129,7 +125,6 @@ subplot(2,1,2)
 hold on
 plot(tsim, Ay_des1)
 plot(tsim, ynonlineaire2(:,2))
-<<<<<<< Updated upstream
 
 figure()
 hold on
@@ -160,7 +155,6 @@ plot(tsim, ynonlineaire(:,19))
 plot(tsim, ylineaire1(:,3))
 plot(tsim, ylineaire(:,3))
 
-=======
 xlabel('Temps(s)')
 ylabel('\theta (rad)')
 legend('Désiré', 'Simulé')
@@ -205,4 +199,3 @@ xlabel('Temps(s)')
 ylabel('y (m)')
 legend('Désirée', 'Simulée')
 % 
->>>>>>> Stashed changes
