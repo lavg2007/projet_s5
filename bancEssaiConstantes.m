@@ -1,8 +1,28 @@
+%**************************************************************************
+% 
+% Fichier: bancEssaiConstantes.m
+% Date: 2019-12-02
+% Université de Sherbrooke - Génie électrique
+% 
+% Équipe P4:
+%           Brittany Latour - latb2901 
+%           Samuel Mathieu - mats2510 
+%           Jacob Fortin - forj1928 
+%           Gabriel Lavoie - lavg2007 
+%           Olivier Chrétien-Rioux - chro2901 
+%           Sarah Clauzade - clas2902 
+%           Thierry Letalnet - lett2101 
+%
+% Résumé: Ici ce trouve les paramètres du banc d'éssai des capteurs et leur 
+% matrice (aussi avec effet Hall).
+% 
+%**************************************************************************
+
+% Constante de gravité
 g   = 9.81;
 
-z_range  = 22.2e-03;            % m
+z_range  = 22.2e-03; % m
 zr_comb = [0 0 0; 0 0 1; 0 1 0; 0 1 1; 1 0 0; 1 0 1; 1 1 0; 1 1 1]'*z_range;
-
 
 % Distance 2D du centre des aimants de sustentation au centre de la plaque
 rABC = 95.20e-03;     % m
@@ -21,6 +41,7 @@ XC = -rABC*sind(30);
 YC = -rABC*cosd(30);
 ZC =  0.0;
 
+% Matrices des coordonnées
 xvec_ABC = [XA, XB, XC]';
 yvec_ABC = [YA, YB, YC]';
 
@@ -45,6 +66,7 @@ XF = +rDEF*sind(30);
 YF = -rDEF*cosd(30);
 ZF =  0.0;
 
+% Matrices des coordonnées des capteurs à effet Hall
 xvec_DEF = [XD, XE, XF]';
 yvec_DEF = [YD, YE, YF]';
 

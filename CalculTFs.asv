@@ -14,9 +14,9 @@
 %           Thierry Letalnet - lett2101 
 %
 % Résumé: Ce fichier permet le calcul des fonctions de transferts du projet
-% en prenant les valeurs à l'équilibre ainsi que leur représentation avec 
-% root locus. Aussi, les graphiques de la position des poles et zéros des 
-% différentes fonctions en phi, theta, z et de la sphère en x et en y.
+% ainsi que leur représentation avec root locus. Aussi, les graphiques de 
+% la position des poles et zéros des différentes fonctions en phi, theta, 
+% z et de la sphère en x et en y.
 % 
 %**************************************************************************
 

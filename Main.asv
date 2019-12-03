@@ -53,13 +53,13 @@ CompensateurPlaque;
 Uinv = inv(U);
 CompensateurSphere;
 
-%% simulations simulink
+%% simulation simulink
 disp('Simulation...')
 open_system('SimulationV4')
 set_param('SimulationV4','AlgebraicLoopSolver','LineSearch')
 sim('SimulationV4')
 
-%% Graphiques
+%% Simulation
 figure()
 % subplot(3,1,1)
 % hold on
