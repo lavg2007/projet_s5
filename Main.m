@@ -3,7 +3,7 @@ clear all
 clc
 
 % Position à l'équilibre de la sphère (pour tests statiques)
-sig = 1;         % Présence (1) ou non (0) de la sphère
+sig = 0;         % Présence (1) ou non (0) de la sphère
 xSeq = 0.000;      % Position x de la sphère à l'équilibre en metres
 ySeq = 0.000;      % Position y de la sphère à l'équilibre en metres
 PI_z = 1;          % Erreur en rp pour le compensateur en z = 0 pour PI_z = 1

@@ -50,3 +50,31 @@ tf_theta = tf(ss(A_theta, B_theta, C_dec, D_dec));
 tf_z = tf(ss(A_z, B_z, C_dec, D_dec));
 
 save('Plaque.mat','tf_phi','tf_theta','tf_z');
+
+%% Valeurs propres
+
+figure
+pzmap(ss(A,B,C,D))
+vp = eig(A)
+
+%% Poles eet zeros
+
+figure()
+rlocus(tf_phi)
+
+figure()
+rlocus(tf_theta)
+
+figure()
+rlocus(tf_z)
+
+figure()
+hold on
+rlocus(tf_sphere_x(1))
+rlocus(tf_sphere_x(2))
+
+figure()
+hold on
+rlocus(tf_sphere_y(1))
+rlocus(tf_sphere_y(2))
+

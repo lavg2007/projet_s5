@@ -71,6 +71,7 @@ stepInfoFTBF = stepinfo(feedback(tf_phi_compense,1));
 marginInfoFTBO = allmargin(tf_phi_compense);
 GMFTBO = 20*log10(marginInfoFTBO.GainMargin);
 PMFTBO = (marginInfoFTBO.PhaseMargin);
+BWangle = bandwidth(feedback(tf_phi_compense,1))
 
 disp(['Overshoot    |   5.0   |    ' num2str(stepInfoFTBF.Overshoot,4)])   
 disp(['SettlingTime |  0.030  |    ' num2str(stepInfoFTBF.SettlingTime,4)])  
@@ -78,12 +79,13 @@ disp(['PeakTime     |  0.025  |    ' num2str(stepInfoFTBF.PeakTime,4)])
 disp(['RiseTime     |  0.020  |    ' num2str(stepInfoFTBF.RiseTime,4)]) 
 disp(['GainMargin   |   10    |    ' num2str(GMFTBO,2)])
 disp(['PhaseMargin  |   25    |    ' num2str(PMFTBO,2)])
+disp(['Bandwidth    |         |    ' num2str(BWangle,4)])
 disp([' ------ ']) 
 
 figure()
 margin(tf_phi_compense)
 
-testdiscret(tf_compensateur_phi)
+% testdiscret(tf_compensateur_phi)
 
 [num_compensateur_angle,den_compensateur_angle] = tfdata(tf_compensateur_phi,'v');
 
@@ -135,10 +137,12 @@ marginInfoFTBO = allmargin(tf_z_compense);
 GMFTBO = 20*log10(marginInfoFTBO.GainMargin);
 PMFTBO = (marginInfoFTBO.PhaseMargin);
 PMFFTBO = (marginInfoFTBO.PMFrequency);
+BWz = bandwidth(feedback(tf_z_compense,1))
 
 disp(['GainMargin   |   10    |    ' num2str(GMFTBO,2)])
 disp(['PhaseMargin  |   25    |    ' num2str(PMFTBO,2)])
 disp(['PMFrequency  |   185   |    ' num2str(PMFFTBO,3)])
+disp(['Bandwidth    |         |    ' num2str(BWz,4)])
 disp([' ------ ']) 
 
 testdiscret(tf_compensateur_z)
