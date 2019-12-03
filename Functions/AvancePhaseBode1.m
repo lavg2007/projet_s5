@@ -17,6 +17,7 @@ if PM_Ks >= PM_s
 end
     
 PM_s;
+deltaphi = PM_s - PM_Ks
 deltaphi = PM_s - PM_Ks+att;
 
 a = (1-sind(deltaphi))/(1+sind(deltaphi));

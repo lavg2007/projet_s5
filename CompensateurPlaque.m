@@ -54,14 +54,19 @@ tf_phi_compense = tf_phi_compense*tf_compensateur_phi2;
 tf_compensateur_phi = tf_compensateur_phi1*tf_compensateur_phi2*1.7;
 tf_phi_compense = tf_phi*tf_compensateur_phi;
 
-% figure()
-% hold on
-% plot(s_angle,'p')
-% rlocus(tf_phi_compense)
-% 
-% figure()
-% t = (0:0.001:0.5)';
-% step(feedback(tf_phi_compense,1),t)
+figure()
+hold on
+plot(s_angle,'p')
+rlocus(tf_phi)
+
+figure()
+hold on
+plot(s_angle,'p')
+rlocus(tf_phi_compense)
+
+figure()
+t = (0:0.001:0.5)';
+step(feedback(tf_phi_compense,1),t)
 
 figure()
 nyquist(tf_phi_compense)
@@ -121,17 +126,21 @@ tf_compensateur_z = tf_compensateur_z1*tf_compensateur_z2*tf_compensateur_z3;
 tf_z_compense = tf_compensateur_z*tf_z;
 
 figure()
+margin(tf_z)
+
+figure()
 margin(tf_z_compense)
 
-% figure()
-% opt = stepDataOptions('StepAmplitude',0.01);
-% hold on
-% step(feedback(tf_z_compense,1),0.5,opt)  % Step response with step amplitude of 0.01;
-% yline(0.01+erp_echelon_hauteur,'linewidth',1);
-% yline(0.01-erp_echelon_hauteur,'linewidth',1);
+figure()
+opt = stepDataOptions('StepAmplitude',0.01);
+hold on
+step(feedback(tf_z_compense,1),0.5,opt)  % Step response with step amplitude of 0.01;
+yline(0.01+erp_echelon_hauteur,'linewidth',1);
+yline(0.01-erp_echelon_hauteur,'linewidth',1);
 
 figure()
 nyquist(tf_z_compense)
+grid on
 
 marginInfoFTBO = allmargin(tf_z_compense);
 GMFTBO = 20*log10(marginInfoFTBO.GainMargin);
@@ -145,7 +154,7 @@ disp(['PMFrequency  |   185   |    ' num2str(PMFFTBO,3)])
 disp(['Bandwidth    |         |    ' num2str(BWz,4)])
 disp([' ------ ']) 
 
-testdiscret(tf_compensateur_z)
+% testdiscret(tf_compensateur_z)
 
 [num_compensateur_z,den_compensateur_z] = tfdata(tf_compensateur_z,'v');
 
