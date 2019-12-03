@@ -1,3 +1,22 @@
+%**************************************************************************
+% 
+% Fichier: equilibre.m
+% Date: 2019-12-02
+% Université de Sherbrooke - Génie électrique
+% 
+% Équipe P4:
+%           Brittany Latour - latb2901 
+%           Samuel Mathieu - mats2510 
+%           Jacob Fortin - forj1928 
+%           Gabriel Lavoie - lavg2007 
+%           Olivier Chrétien-Rioux - chro2901 
+%           Sarah Clauzade - clas2902 
+%           Thierry Letalnet - lett2101 
+%
+% Résumé: Ce fichier contient les équations du système à l'équilibre.
+% 
+%**************************************************************************
+
 disp('Calcul des conditions d''équilibre...')
 
 load('CoefficientsActionneurs.mat')
