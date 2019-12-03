@@ -13,12 +13,13 @@
 %           Sarah Clauzade - clas2902 
 %           Thierry Letalnet - lett2101 
 %
-%  Résumé: Ce fichier contient les spécifications et calcules nécéssaires a
-%  la compensation du système avec la sphère présente.
+%  Résumé: Ceci est le fichier principale du projet. Il est possible de
+%  démarrer les simulations avec ou sans sphère et tout les fichiers
+%  éssentiels sont reliés ici ainsi que les graphiques de Nyquist.
 % 
 %**************************************************************************
 
-%% calcul des compensateurs (sphere)
+%% calcul des compensateurs (sphere
 
 % spécifications 
 ts_s = 2; % entre 2 et 4
