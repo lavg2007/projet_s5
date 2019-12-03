@@ -1,6 +1,6 @@
 %**************************************************************************
 % 
-% Fichier: DoubleAvanceDePhase.m
+% Fichier: CompensateurPlaque.m
 % Date: 2019-12-02
 % Université de Sherbrooke - Génie électrique
 % 
@@ -22,7 +22,7 @@
 %          Wa -> une vitesse angulaire
 %          s -> un angle (en degrée)
 %          ajustement -> valeur numérique désiré
-% 
+
 % Sortie:  Ga -> Fonction de transfert ajuster
 % 
 %**************************************************************************

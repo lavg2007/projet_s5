@@ -1,3 +1,23 @@
+%**************************************************************************
+% 
+% Fichier: CompensateurPlaque.m
+% Date: 2019-12-02
+% Université de Sherbrooke - Génie électrique
+% 
+% Équipe P4:
+%           Brittany Latour - latb2901 
+%           Samuel Mathieu - mats2510 
+%           Jacob Fortin - forj1928 
+%           Gabriel Lavoie - lavg2007 
+%           Olivier Chrétien-Rioux - chro2901 
+%           Sarah Clauzade - clas2902 
+%           Thierry Letalnet - lett2101 
+%
+%  Résumé: Ce fichier, à l'aide des spécifications du client, calcul les
+%  fonctions de transfert du compensateur en phi et en Z.
+% 
+%**************************************************************************
+
 warning('off','all')
 %% loading functions and tfs
 
@@ -5,7 +25,7 @@ addpath('Functions')
 load('Plaque.mat')
 load('PIz.mat')
 
-%% Condideration importantes
+%% Consideration importantes
 
 %frequence angulaire naturelle des poles et zeros < 1000 rad/s
 %Avec testdiscret.p (prend la tf du compensateur) :

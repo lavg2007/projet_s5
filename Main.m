@@ -60,6 +60,7 @@ z_des     = [t_des, ones(size(t_des))*0.015];
 tfin = tt+Ts;
 
 %%
+
 %bancessai_ini  %faites tous vos calculs de modele ici
 CalculTFs;
 CompensateurPlaque;
@@ -67,11 +68,14 @@ Uinv = inv(U);
 CompensateurSphere;
 
 %% simulations simulink
+
 disp('Simulation...')
 open_system('SimulationV4')
 set_param('SimulationV4','AlgebraicLoopSolver','LineSearch')
 sim('SimulationV4')
+
 %% Graphiques
+
 figure()
 % subplot(3,1,1)
 % hold on
@@ -102,7 +106,7 @@ plot(tsim, ynonlineaire2(:,8))
 xlabel('Temps(s)')
 ylabel('y (m)')
 legend('Désirée', 'Simulée')
-% 
+
 subplot(3,1,3)
 hold on
 plot(tsim, z_des_out1)
@@ -159,7 +163,6 @@ xlabel('Temps(s)')
 ylabel('\theta (rad)')
 legend('Désiré', 'Simulé')
 
-
 %%
 figure()
 subplot(2,1,1)
@@ -178,7 +181,6 @@ plot(tsim, ylineaire(:,5))
 xlabel('Temps(s)')
 ylabel('y (m)')
 legend('Désirée', 'Simulée')
-% 
 
 %% 
 figure()
@@ -198,4 +200,3 @@ plot(tsim, ylineaire1(:,5))
 xlabel('Temps(s)')
 ylabel('y (m)')
 legend('Désirée', 'Simulée')
-% 
