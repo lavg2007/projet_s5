@@ -39,11 +39,11 @@ dx = linspace(x(1), x(end), M);
 for i = 1:numel(Pi)-1
     dPi(i) = Pi(i+1)*(i);
 end
-df = polyval(flip(dPi),dx)
+df = polyval(flip(dPi),dx);
 for i = 1:numel(dPi)-1
     ddPi(i) = dPi(i+1)*(i);
 end
-ddf = polyval(flip(ddPi),dx)
+ddf = polyval(flip(ddPi),dx);
 
 pas = (x(end)-x(1))/(M-1);
 
