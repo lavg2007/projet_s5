@@ -20,7 +20,7 @@
 %          wg -> Vitesse angulaire désirée
 %          facteur -> Valeur arbitraire vue en classe
 % 
-% Sortie:  Gr -> Fonction de transfert du compensateur PI
+% Sortie:  Gr -> Compensateur
 % 
 %**************************************************************************
 

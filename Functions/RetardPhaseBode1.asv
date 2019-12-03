@@ -22,7 +22,7 @@
 %          wg_s -> Vitesse angulaire désirée
 %          marge -> Marge désirée
 % 
-% Sortie:  Gr -> Fonction de transfert du compensateur à retard de phase.
+% Sortie:  Gr -> Fonction de transfert du compensateur à retard de phase
 % 
 %**************************************************************************
 
