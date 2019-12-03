@@ -66,6 +66,7 @@ z_des     = [t_des, ones(size(t_des))*0.015];
 tfin = abs(tt)+Ts;
 
 %%
+
 %bancessai_ini  %faites tous vos calculs de modele ici
 CalculTFs;
 CompensateurPlaque;
@@ -73,10 +74,27 @@ Uinv = inv(U);
 CompensateurSphere;
 
 %% simulations simulink
+
 disp('Simulation...')
 open_system('SimulationV4')
 set_param('SimulationV4','AlgebraicLoopSolver','LineSearch')
 sim('SimulationV4')
+<<<<<<< HEAD
+=======
+
+%% Graphiques
+
+figure()
+% subplot(3,1,1)
+% hold on
+% plot(tsim, x_des_out1)
+% plot(tsim, ynonlineaire2(:,7))
+
+% subplot(3,1,2)
+% hold on
+% plot(tsim, y_des_out1)
+% plot(tsim, ynonlineaire2(:,8))
+>>>>>>> f967b32602cd8444c5b505958c81dc10088174ca
 
 %% Figures
 
@@ -101,10 +119,14 @@ plot(tsim, ynonlineaire2(:,8))
 xlabel('Temps(s)')
 ylabel('y (m)')
 legend('Désirée', 'Simulée')
+<<<<<<< HEAD
 % [E, R2, RMS] = Erreur(tsim,y_des_out1,ynonlineaire2(:,8))
 performanceY = sum(y_des_out1-ynonlineaire2(:,8))
 
 % 
+=======
+
+>>>>>>> f967b32602cd8444c5b505958c81dc10088174ca
 subplot(3,1,3)
 hold on
 plot(tsim, z_des_out1)
@@ -117,9 +139,42 @@ legend('Désirée', 'Simulée')
 figure()
 plot(DetectionViolation)
 
+<<<<<<< HEAD
+=======
+%%
+>>>>>>> f967b32602cd8444c5b505958c81dc10088174ca
 figure()
 hold on
 plot(x_des_out1, y_des_out1)
 plot(ynonlineaire2(:,7), ynonlineaire2(:,8))
 
+<<<<<<< HEAD
 
+=======
+subplot(2,1,2)
+hold on
+plot(tsim, y_des_out1)
+plot(tsim, ylineaire(:,5))
+xlabel('Temps(s)')
+ylabel('y (m)')
+legend('Désirée', 'Simulée')
+
+%% 
+figure()
+subplot(2,1,1)
+title('Système linéaire')
+hold on
+plot(tsim, x_des_out1)
+plot(tsim, ylineaire1(:,4))
+xlabel('Temps(s)')
+ylabel('x (m)')
+legend('Désirée', 'Simulée')
+
+subplot(2,1,2)
+hold on
+plot(tsim, y_des_out1)
+plot(tsim, ylineaire1(:,5))
+xlabel('Temps(s)')
+ylabel('y (m)')
+legend('Désirée', 'Simulée')
+>>>>>>> f967b32602cd8444c5b505958c81dc10088174ca

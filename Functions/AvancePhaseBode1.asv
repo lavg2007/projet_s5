@@ -14,14 +14,13 @@
 %           Thierry Letalnet - lett2101 
 %
 % Résumé: Calcul d'un compensateur avance de phase a partir de la marge de 
-% phase (PM) et de la bande passante (BW).
+% phase (PM) et de la bande passante (BW)
 % 
 % Entrés:  FTBO -> Une fonction de transfert en boucle ouverte
-%          PM_s -> Marge de phase désiré
-%          BW_s -> Bande passante désiré
+%          s -> un angle (en degrée)
+%          marge -> valeur numérique de la marge de phase désiré
 % 
-% Sortie:  Ga -> Fonction de transfert du compensateur à avance de phase
-% fait à partir de spécification en PM et BW.
+% Sortie:  Gpi -> Fonction de transfert du compensateur PI
 % 
 %**************************************************************************
 
@@ -44,7 +43,6 @@ if PM_Ks >= PM_s
 end
     
 PM_s;
-deltaphi = PM_s - PM_Ks
 deltaphi = PM_s - PM_Ks+att;
 
 a = (1-sind(deltaphi))/(1+sind(deltaphi));

@@ -1,3 +1,32 @@
+%**************************************************************************
+% 
+% Fichier: DoubleAvanceDePhase.m
+% Date: 2019-12-02
+% Université de Sherbrooke - Génie électrique
+% 
+% Équipe P4:
+%           Brittany Latour - latb2901 
+%           Samuel Mathieu - mats2510 
+%           Jacob Fortin - forj1928 
+%           Gabriel Lavoie - lavg2007 
+%           Olivier Chrétien-Rioux - chro2901 
+%           Sarah Clauzade - clas2902 
+%           Thierry Letalnet - lett2101 
+%
+% Résumé: Calcul d'une fonction permettant une double avance de phase.
+% 
+% Entrés:  FTBO -> Une fonction de transfert en boucle ouverte
+%          phi -> un angle (en degrée)
+%          Wn -> une vitesse angulaire
+%          zeta -> un angle (en degrée)
+%          Wa -> une vitesse angulaire
+%          s -> un angle (en degrée)
+%          ajustement -> valeur numérique désiré
+% 
+% Sortie:  Ga -> Fonction de transfert ajuster
+% 
+%**************************************************************************
+
 function [ Ga ] = DoubleAvanceDePhase( FTBO,phi,Wn,zeta,Wa,s,ajustement )
 %Compensateur avance de phase
 %   [ G, Ka ] = AvanceDePhase( num,den,phi,Wn,zeta,Wa,s )
