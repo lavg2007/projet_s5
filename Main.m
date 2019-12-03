@@ -1,3 +1,24 @@
+%**************************************************************************
+% 
+% Fichier: Main.m
+% Date: 2019-12-02
+% Université de Sherbrooke - Génie électrique
+% 
+% Équipe P4:
+%           Brittany Latour - latb2901 
+%           Samuel Mathieu - mats2510 
+%           Jacob Fortin - forj1928 
+%           Gabriel Lavoie - lavg2007 
+%           Olivier Chrétien-Rioux - chro2901 
+%           Sarah Clauzade - clas2902 
+%           Thierry Letalnet - lett2101 
+%
+%  Résumé: Ceci est le fichier principale du projet. Il est possible de
+%  démarrer les simulations avec ou sans sphère et tout les fichiers
+%  éssentiels sont reliés ici ainsi que les graphiques de Nyquist.
+% 
+%**************************************************************************
+
 close all
 clear all
 clc
@@ -45,14 +66,14 @@ CompensateurPlaque;
 Uinv = inv(U);
 CompensateurSphere;
 
-%% simulation
+%% simulations simulink
 disp('Simulation...')
 open_system('SimulationV4')
 set_param('SimulationV4','AlgebraicLoopSolver','LineSearch')
 sim('SimulationV4')
 <<<<<<< Updated upstream
 
-%%
+%% Graphiques
 figure()
 % subplot(3,1,1)
 % hold on
