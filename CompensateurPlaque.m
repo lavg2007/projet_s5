@@ -2,6 +2,8 @@ warning('off','all')
 %% loading functions and tfs
 
 addpath('Functions')
+load('Plaque.mat')
+load('PIz.mat')
 
 %% Condideration importantes
 

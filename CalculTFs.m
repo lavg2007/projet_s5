@@ -48,3 +48,5 @@ tf_sphere_y = tf(ss(A_sphere_y, B_sphere_y, C_sphere_y, D_sphere_y));
 tf_phi = tf(ss(A_phi, B_phi, C_dec, D_dec));
 tf_theta = tf(ss(A_theta, B_theta, C_dec, D_dec));
 tf_z = tf(ss(A_z, B_z, C_dec, D_dec));
+
+save('Plaque.mat','tf_phi','tf_theta','tf_z');
