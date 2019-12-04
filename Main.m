@@ -175,25 +175,3 @@ plot(tsim, ylineaire1(:,5))
 xlabel('Temps(s)')
 ylabel('y (m)')
 legend('Désirée', 'Simulée')
-
-%% PZmap
-
-figure
-pzmap(ss(A,B,C,D))
-vp = eig(A)
-% Poles 
-figure
-rlocus(tf_sphere(4,1))
-figure
-rlocus(tf_sphere(2,1))
-%title('tf_sphere');
-figure
-rlocus(tf_phi)
-figure
-rlocus(tf_theta)
-figure
-rlocus(tf_z)
-figure
-rlocus(tf_sphere(3,2))
-figure
-rlocus(tf_sphere(1,2))
