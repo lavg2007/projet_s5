@@ -14,8 +14,12 @@
 %           Thierry Letalnet - lett2101 
 %
 %  Résumé: Ceci est le fichier principale du projet. Il est possible de
-%  démarrer les simulations avec ou sans sphère et tout les fichiers
-%  éssentiels sont reliés ici ainsi que les graphiques de Nyquist.
+%  choisir avec ou sans la sphère pour les simulations et calculs. Il fait
+%  référence aux calculs des fonctions de transfert, aux calculs des
+%  compensateurs de la plaque et des spécifications de la compensation de la
+%  sphère. La pluspart des graphiques de Nyquist, les diagrammes de Bodes
+%  et les compensateurs apparaitrons avec un Run de ce fichier ainsi que
+%  les simulations simulink.
 % 
 %**************************************************************************
 
@@ -79,8 +83,6 @@ disp('Simulation...')
 open_system('SimulationV4')
 set_param('SimulationV4','AlgebraicLoopSolver','LineSearch')
 sim('SimulationV4')
-<<<<<<< HEAD
-=======
 
 %% Graphiques
 
@@ -94,10 +96,10 @@ figure()
 % hold on
 % plot(tsim, y_des_out1)
 % plot(tsim, ynonlineaire2(:,8))
->>>>>>> f967b32602cd8444c5b505958c81dc10088174ca
 
 %% Figures
 
+% Valeurs de x désirés vs valeurs obtenues
 figure()
 subplot(3,1,1)
 title('Système non-linéaire, positions')
@@ -112,6 +114,7 @@ xlabel('Temps(s)')
 ylabel('x (m)')
 legend('Désirée', 'Simulée')
 
+% Valeurs de y désirés vs valeurs obtenues
 subplot(3,1,2)
 hold on
 plot(tsim, y_des_out1)
@@ -119,14 +122,10 @@ plot(tsim, ynonlineaire2(:,8))
 xlabel('Temps(s)')
 ylabel('y (m)')
 legend('Désirée', 'Simulée')
-<<<<<<< HEAD
 % [E, R2, RMS] = Erreur(tsim,y_des_out1,ynonlineaire2(:,8))
 performanceY = sum(y_des_out1-ynonlineaire2(:,8))
 
-% 
-=======
-
->>>>>>> f967b32602cd8444c5b505958c81dc10088174ca
+% Valeurs de z désirés vs valeurs obtenues
 subplot(3,1,3)
 hold on
 plot(tsim, z_des_out1)
@@ -135,22 +134,18 @@ xlabel('Temps(s)')
 ylabel('z (m)')
 legend('Désirée', 'Simulée')
 
-
+% Système linéaire
 figure()
 plot(DetectionViolation)
 
-<<<<<<< HEAD
-=======
 %%
->>>>>>> f967b32602cd8444c5b505958c81dc10088174ca
+% Valeurs de x et y désirés vs valeurs obtenues
 figure()
 hold on
 plot(x_des_out1, y_des_out1)
 plot(ynonlineaire2(:,7), ynonlineaire2(:,8))
 
-<<<<<<< HEAD
-
-=======
+% Valeurs de y désirés dans le système linéaire vs valeurs obtenues
 subplot(2,1,2)
 hold on
 plot(tsim, y_des_out1)
@@ -160,6 +155,7 @@ ylabel('y (m)')
 legend('Désirée', 'Simulée')
 
 %% 
+% Valeurs de x désirés dans le système linéaire vs valeurs obtenues
 figure()
 subplot(2,1,1)
 title('Système linéaire')
@@ -170,6 +166,7 @@ xlabel('Temps(s)')
 ylabel('x (m)')
 legend('Désirée', 'Simulée')
 
+% Valeurs de y désirés dans le système linéaire vs valeurs obtenues
 subplot(2,1,2)
 hold on
 plot(tsim, y_des_out1)
@@ -177,4 +174,3 @@ plot(tsim, ylineaire1(:,5))
 xlabel('Temps(s)')
 ylabel('y (m)')
 legend('Désirée', 'Simulée')
->>>>>>> f967b32602cd8444c5b505958c81dc10088174ca
