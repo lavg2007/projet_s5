@@ -155,8 +155,8 @@ figure()
 opt = stepDataOptions('StepAmplitude',0.01);
 hold on
 step(feedback(tf_z_compense,1),0.5,opt)  % Step response with step amplitude of 0.01;
-yline(0.01+erp_echelon_hauteur,'linewidth',1);
-yline(0.01-erp_echelon_hauteur,'linewidth',1);
+% yline(0.01+erp_echelon_hauteur,'linewidth',1);
+% yline(0.01-erp_echelon_hauteur,'linewidth',1);
 
 figure()
 nyquist(tf_z_compense)

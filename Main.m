@@ -51,8 +51,8 @@ Pzeq = .015;            %en metres
 x_d     = [-1:0.2:1]'*0.05;
 y_d     = [0 0.2 0.5 0 -1  0 1 0 0 0.2 -1]'*0.05;
 
-x_d     = NBA(:,1);
-y_d     = NBA(:,2);
+x_d     = NAB(:,1);
+y_d     = NAB(:,2);
 
 Pxinitial = x_d(1);
 Pyinitial = y_d(1);
@@ -63,7 +63,7 @@ bancEssaiConstantes;
 load('CoefficientsActionneurs.mat')
 
 % Ts = 2;
-[Pi,Ltr, E, Vr, Traj, tt, tab] = trajectoire(x_d,y_d,vBA,Ts);
+[Pi,Ltr, E, Vr, Traj, tt, tab] = trajectoire(x_d,y_d,vAB,Ts);
 t_des = [0:Ts:abs(tt)]';
 x_des     = [t_des, Traj(:,1)];
 y_des     = [t_des, Traj(:,2)];
@@ -82,7 +82,7 @@ CompensateurSphere;
 
 disp('Simulation...')
 open_system('SimulationV4')
-set_param('SimulationV4','AlgebraicLoopSolver','LineSearch')
+set_param('SimulationV4','AlgebraicLoopSolver','TrustRegion')
 sim('SimulationV4')
 
 %% Graphiques
@@ -142,6 +142,7 @@ plot(DetectionViolation)
 %%
 % Valeurs de x et y désirés vs valeurs obtenues
 figure()
+subplot(2,1,1)
 hold on
 plot(x_des_out1, y_des_out1)
 plot(ynonlineaire2(:,7), ynonlineaire2(:,8))
