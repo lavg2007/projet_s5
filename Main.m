@@ -47,6 +47,7 @@ Pzeq = .015;            %en metres
 % z_des     = [t_des, [1 1 1 1  1  1 1 1 1]'*.015];
 % tfin = 50;
 %%
+
 x_d     = [-1:0.2:1]'*0.05;
 y_d     = [0 0.2 0.5 0 -1  0 1 0 0 0.2 -1]'*0.05;
 
@@ -69,7 +70,7 @@ y_des     = [t_des, Traj(:,2)];
 z_des     = [t_des, ones(size(t_des))*0.015];
 tfin = abs(tt)+Ts;
 
-%%
+%% Calcul des compensateurs
 
 %bancessai_ini  %faites tous vos calculs de modele ici
 CalculTFs;
@@ -174,3 +175,25 @@ plot(tsim, ylineaire1(:,5))
 xlabel('Temps(s)')
 ylabel('y (m)')
 legend('Désirée', 'Simulée')
+
+%% PZmap
+
+figure
+pzmap(ss(A,B,C,D))
+vp = eig(A)
+% Poles 
+figure
+rlocus(tf_sphere(4,1))
+figure
+rlocus(tf_sphere(2,1))
+%title('tf_sphere');
+figure
+rlocus(tf_phi)
+figure
+rlocus(tf_theta)
+figure
+rlocus(tf_z)
+figure
+rlocus(tf_sphere(3,2))
+figure
+rlocus(tf_sphere(1,2))
