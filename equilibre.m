@@ -92,6 +92,8 @@ disp(['FAe = ' num2str(FAe) '    FAs = ' num2str(FAs)])
 disp(['FBe = ' num2str(FBe) '    FBs = ' num2str(FBs)])
 disp(['FCe = ' num2str(FCe) '    FCs = ' num2str(FCs)])
 
+
+
 ZDeq = Pzeq - XD*deg2rad(Ayeq) + YD*deg2rad(Axeq);
 ZEeq = Pzeq - XE*deg2rad(Ayeq) + YE*deg2rad(Axeq);
 ZFeq = Pzeq - XF*deg2rad(Ayeq) + YF*deg2rad(Axeq);
