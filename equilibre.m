@@ -42,7 +42,7 @@ ZCeq = Pzeq - XC*deg2rad(Ayeq) + YC*deg2rad(Axeq) ;
 
 eqFA = sign(IAeq)*(IAeq^2 + be1*abs(IAeq))/(ae0 + ZAeq*ae1 + ZAeq^2*ae2 + ZAeq^3*ae3)  == FAeq + 1/(as0 + ZAeq*as1 + ZAeq^2*as2 + ZAeq^3*as3);
 eqFB = sign(IBeq)*(IBeq^2 + be1*abs(IBeq))/(ae0 + ZBeq*ae1 + ZBeq^2*ae2 + ZBeq^3*ae3)  == FBeq + 1/(as0 + ZBeq*as1 + ZBeq^2*as2 + ZBeq^3*as3);
-eqFC = sign(ICeq)*(ICeq^2 + be1*abs(ICeq))/(ae0 + ZCeq*ae1 + ZCeq^2*ae2 + ZCeq^3*ae3) == FCeq + 1/(as0 + ZCeq*as1 + ZCeq^2*as2 + ZCeq^3*as3); 
+eqFC = sign(IBeq)*(ICeq^2 + be1*abs(ICeq))/(ae0 + ZCeq*ae1 + ZCeq^2*ae2 + ZCeq^3*ae3) == FCeq + 1/(as0 + ZCeq*as1 + ZCeq^2*as2 + ZCeq^3*as3); 
 
 % Courants à l'équilibre
 
@@ -50,50 +50,6 @@ eqFC = sign(ICeq)*(ICeq^2 + be1*abs(ICeq))/(ae0 + ZCeq*ae1 + ZCeq^2*ae2 + ZCeq^3
 
 % Tensions à l'équilibre
 
-IAeq = double(IAeq);
-IBeq = double(IBeq);
-ICeq = double(ICeq);
-
 VAeq = double(IAeq*RA);
 VBeq = double(IBeq*RB);
 VCeq = double(ICeq*RC);
-
-disp('Variables d''états a l''equilibre')
-disp(['Ax = ' num2str(Axeq)])
-disp(['Ay = ' num2str(Axeq)])
-disp(['z = ' num2str(Pzeq)])
-disp(['Wx = ' num2str(0)])
-disp(['Wy = ' num2str(0)])
-disp(['Vz = ' num2str(0)])
-disp(['Px = ' num2str(Pxeq)])
-disp(['Py = ' num2str(Pyeq)])
-disp(['Vx = ' num2str(0)])
-disp(['Vy = ' num2str(0)])
-disp(['Ia = ' num2str(double(IAeq))])
-disp(['Ib = ' num2str(double(IBeq))])
-disp(['Ic = ' num2str(double(ICeq))])
-disp('Entrées a l''équilibre')
-disp(['Va = ' num2str(VAeq)])
-disp(['Vb = ' num2str(VBeq)])
-disp(['Vc = ' num2str(VCeq)])
-
-
-
-FAe = sign(IAeq)*(IAeq^2 + be1*abs(IAeq))/(ae0 + ZAeq*ae1 + ZAeq^2*ae2 + ZAeq^3*ae3);
-FBe = sign(IBeq)*(IBeq^2 + be1*abs(IBeq))/(ae0 + ZBeq*ae1 + ZBeq^2*ae2 + ZBeq^3*ae3);
-FCe = sign(IBeq)*(ICeq^2 + be1*abs(ICeq))/(ae0 + ZCeq*ae1 + ZCeq^2*ae2 + ZCeq^3*ae3);
-
-FAs = 1/(as0 + ZAeq*as1 + ZAeq^2*as2 + ZAeq^3*as3);
-FBs = 1/(as0 + ZBeq*as1 + ZBeq^2*as2 + ZBeq^3*as3);
-FCs = 1/(as0 + ZCeq*as1 + ZCeq^2*as2 + ZCeq^3*as3);
-
-disp('Forces a l''équilibre')
-disp(['FAe = ' num2str(FAe) '    FAs = ' num2str(FAs)])
-disp(['FBe = ' num2str(FBe) '    FBs = ' num2str(FBs)])
-disp(['FCe = ' num2str(FCe) '    FCs = ' num2str(FCs)])
-
-
-
-ZDeq = Pzeq - XD*deg2rad(Ayeq) + YD*deg2rad(Axeq);
-ZEeq = Pzeq - XE*deg2rad(Ayeq) + YE*deg2rad(Axeq);
-ZFeq = Pzeq - XF*deg2rad(Ayeq) + YF*deg2rad(Axeq);

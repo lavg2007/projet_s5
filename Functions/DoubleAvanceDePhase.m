@@ -48,6 +48,7 @@ end
 
 phase = (phasez_sum - phasep_sum)*180/pi;
 phase = phase(1);
+deltaphi = (-180 - phase )
 deltaphi = (-180 - phase + ajustement)/2;
 alpha = 180 - phi;
 

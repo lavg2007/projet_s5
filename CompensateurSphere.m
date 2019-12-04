@@ -13,7 +13,7 @@
 %           Sarah Clauzade - clas2902 
 %           Thierry Letalnet - lett2101 
 %
-%  Résumé: Ce fichier contient les spécifications et calcules nécéssaires a
+%  Résumé: Ce fichier contient les spécifications et calculs nécéssaires à
 %  la compensation du système avec la sphère présente.
 % 
 %**************************************************************************

@@ -45,7 +45,7 @@ for i = 1:numel(dPi)-1
 end
 ddf = polyval(flip(ddPi),dx);
 
-pas = (x(end)-x(1))/(M-1);
+pas = abs((x(end)-x(1))/(M-1));
 
 g = sqrt(1 + (df).^2);
 
@@ -66,11 +66,11 @@ Vr = Ltr(end)/(Ts*(O-1));
 % %Newton-Raphson
 
 
-Leq = Ltr(end)/(O-1);
+Leq = sign(x(2)-x(1))*Ltr(end)/(O-1);
 an = x(1);
 X(1) = an;
 for i=2:O
-    bn = an + 0.01;
+    bn = an + 0.001;
     xn = linspace(an, bn, M);
     dfn = polyval(flip(dPi),xn);
     gn = sqrt(1 + (dfn).^2);
@@ -79,9 +79,9 @@ for i=2:O
     fn = Ltrn - Leq;
     dn= gn(end);
     it1 = 0;
-    tol = 1e-8;
+    tol = 1e-5;
 
-    while abs(fn)>tol && it1<501
+    while abs(fn)>tol % && it1<501
         bn = bn - fn/dn;
         xn = linspace(an, bn, M);
         dfn = polyval(flip(dPi),xn);
